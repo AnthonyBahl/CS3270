@@ -1,0 +1,6 @@
+Log.d()	-- Debug (does not show up in published version)
+
+--- Logs to an unsafe location and is in published version ---
+Log.e()	-- error
+Log.w()	-- warning
+Log.i()	-- info

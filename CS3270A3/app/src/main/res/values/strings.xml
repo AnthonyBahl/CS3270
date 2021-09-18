@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">CS3270A3 Bahl</string>
+    <string name="rock_paper_scissors">Rock, Paper, Scissors</string>
+    <string name="by_anthony_bahl">By Anthony Bahl</string>
+    <string name="my_pick">My Pick</string>
+    <string name="rock">Rock</string>
+    <string name="paper">Paper</string>
+    <string name="scissors">Scissors</string>
+    <string name="phone_pick_is">Phone Pick is</string>
+    <string name="question_mark">\?</string>
+    <string name="games_played">Games Played</string>
+    <string name="_0">0</string>
+    <string name="phone_win_count">Phone Win Count</string>
+    <string name="my_win_count">My Win Count</string>
+    <string name="tie_games">Tie Games</string>
+    <string name="game_results">-</string>
+    <string name="player_win">You Win!</string>
+    <string name="phone_win">Phone Wins!</string>
+    <string name="tie_game">Tie Game!</string>
+    <string name="counts_reset">Counts are reset</string>
+    <string name="reset_counts">Reset Counts</string>
+</resources>

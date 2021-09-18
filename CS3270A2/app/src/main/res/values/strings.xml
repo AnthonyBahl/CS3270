@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">CS3270A2 Bahl</string>
+    <string name="load_fragment_2">Load Fragment 2</string>
+    <string name="load_fragment_4">Load Fragment 4</string>
+    <string name="load_fragment_3">Load Fragment 3</string>
+    <string name="switch_3_4"><![CDATA[switch 3 & 4]]></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_d">Fragment D</string>
+    <string name="fragment_c">Fragment C</string>
+    <string name="fragment_b">Fragment B</string>
+    <string name="fragment_a">Fragment A</string>
+</resources>
