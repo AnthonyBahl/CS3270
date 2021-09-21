@@ -31,21 +31,26 @@ public class MainActivity extends AppCompatActivity implements TaxFragment.onSee
 
     /**
      * Recieves the new Tax % when the seek bar is updated.
-     * @param value Value of seek bar (The tax %)
+     * @param taxRate Value of seek bar (The tax %)
      */
     @Override
-    public void onSeekUpdate(BigDecimal value) {
+    public void onSeekUpdate(BigDecimal taxRate) {
 
+        // Check to make sure fragments are initialized
         initializeFragments();
 
-        //ToDo: Get Item Sum from Items Fragment
 
-        //ToDo: updateTaxAmount(ItemCost, TaxRate) (in tax Fragment)
-        if (taxFragment != null) {
-            // taxFragment.updateTaxAmount();
+        if (itemsFragment != null && taxFragment != null && totalsFragment != null) {
+
+            // Get Item Sum from Items Fragment
+            BigDecimal bdItemTotal = itemsFragment.getItemTotal();
+
+            // Update Tax Amount on the tax fragment
+            taxFragment.updateTaxAmount(bdItemTotal, taxRate);
+
+            // Update Total Amount on the Totals Fragment
+            totalsFragment.updateTotalAmount(bdItemTotal, taxRate);
         }
-
-        //ToDo: updateTotalAmount(ItemCost, TaxRate) (in total Fragment)
     }
 
     /**

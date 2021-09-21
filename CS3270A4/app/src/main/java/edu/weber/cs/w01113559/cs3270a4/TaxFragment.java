@@ -188,7 +188,7 @@ public class TaxFragment extends Fragment {
         }
     }
 
-    public void updateTaxAmount(BigDecimal ItemCost, BigDecimal TaxRate) {
+    public void updateTaxAmount(BigDecimal itemTotal, BigDecimal taxRate) {
 
         //ToDo: Calculate Tax Amount
 
