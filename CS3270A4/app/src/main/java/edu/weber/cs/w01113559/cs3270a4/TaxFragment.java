@@ -33,6 +33,7 @@ public class TaxFragment extends Fragment {
     private View root;
     private onSeekChanged mCallback;
     private NumberFormat nfPercentage;
+    private NumberFormat nfDollars;
     private TextView tvTaxRate;
 
     private String mParam1;
@@ -97,6 +98,11 @@ public class TaxFragment extends Fragment {
         nfPercentage.setMinimumIntegerDigits(2);
         nfPercentage.setMaximumFractionDigits(2);
         nfPercentage.setMinimumFractionDigits(2);
+
+        // Format for US Dollars
+        nfDollars = NumberFormat.getInstance(Locale.US);
+        nfDollars.setMaximumFractionDigits(2);
+        nfDollars.setMinimumFractionDigits(2);
 
         // Get the TextView that holds the tax rate
         tvTaxRate =root.findViewById(R.id.txtviewTaxRate);

@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import java.math.BigDecimal;
 
-public class MainActivity extends AppCompatActivity implements TaxFragment.onSeekChanged {
+public class MainActivity extends AppCompatActivity implements TaxFragment.onSeekChanged, ItemsFragment.onItemChange {
 
     // Fragment Manager to be used throughout the app
     private FragmentManager fragManager;
@@ -68,6 +68,28 @@ public class MainActivity extends AppCompatActivity implements TaxFragment.onSee
 
         if (taxFragment == null) {
             taxFragment = (TaxFragment) fragManager.findFragmentByTag("taxFrag");
+        }
+    }
+
+    /**
+     * Update the Tax Amount and Total Amount.
+     * @param newTotal BigDecimal - Sum of all item costs.
+     */
+    @Override
+    public void onItemUpdate(BigDecimal newTotal) {
+
+        initializeFragments();
+
+        if (itemsFragment != null && taxFragment != null && totalsFragment != null) {
+
+            // Get Item Sum from Items Fragment
+            BigDecimal bdTaxRate = taxFragment.getTaxRate();
+
+            // Update Tax Amount on the tax fragment
+            taxFragment.updateTaxAmount(newTotal, bdTaxRate);
+
+            // Update Total Amount on the Totals Fragment
+            totalsFragment.updateTotalAmount(newTotal, bdTaxRate);
         }
     }
 }
