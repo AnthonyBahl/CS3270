@@ -7,6 +7,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +28,7 @@ import java.util.Locale;
  */
 public class ItemsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -37,6 +40,55 @@ public class ItemsFragment extends Fragment {
     private TextInputEditText tilItemAmount4;
     private onItemChange mCallBack;
 
+    /**
+     * Listener for text values to change.
+     */
+    private final TextWatcher itemWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            mCallBack.onItemUpdate(getItemTotal());
+        }
+    };
+
+    /**
+     *
+     * @return Sum of all items.
+     */
+    public BigDecimal getItemTotal() {
+
+        BigDecimal total = new BigDecimal(0);
+
+        if (!(tilItemAmount1.getText().toString().isEmpty())) {
+            total = total.add(new BigDecimal(tilItemAmount1.getText().toString()));
+        }
+
+        if (!(tilItemAmount2.getText().toString().isEmpty())) {
+            total = total.add(new BigDecimal(tilItemAmount2.getText().toString()));
+        }
+
+        if (!(tilItemAmount3.getText().toString().isEmpty())) {
+            total = total.add(new BigDecimal(tilItemAmount3.getText().toString()));
+        }
+
+        if (!(tilItemAmount4.getText().toString().isEmpty())) {
+            total = total.add(new BigDecimal(tilItemAmount4.getText().toString()));
+        }
+
+        return total;
+
+
+    }
+
     interface onItemChange{
         /**
          * Passes the new Total of all items whenever any item cost changes.
@@ -45,7 +97,6 @@ public class ItemsFragment extends Fragment {
         void onItemUpdate(BigDecimal newTotal);
     }
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -61,7 +112,7 @@ public class ItemsFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment ItemsFragment.
      */
-    // TODO: Rename and change types and number of parameters
+
     public static ItemsFragment newInstance(String param1, String param2) {
         ItemsFragment fragment = new ItemsFragment();
         Bundle args = new Bundle();
@@ -121,6 +172,11 @@ public class ItemsFragment extends Fragment {
         if (item4 >= 0) {
             tilItemAmount4.setText(nfDollars.format(item4));
         }
+
+        tilItemAmount1.addTextChangedListener(itemWatcher);
+        tilItemAmount2.addTextChangedListener(itemWatcher);
+        tilItemAmount3.addTextChangedListener(itemWatcher);
+        tilItemAmount4.addTextChangedListener(itemWatcher);
     }
 
     @Override

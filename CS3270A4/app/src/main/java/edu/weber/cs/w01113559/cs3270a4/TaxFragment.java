@@ -35,9 +35,22 @@ public class TaxFragment extends Fragment {
     private NumberFormat nfPercentage;
     private NumberFormat nfDollars;
     private TextView tvTaxRate;
+    private TextView tvTaxAmount;
 
     private String mParam1;
     private String mParam2;
+
+    /**
+     *
+     * @return Current tax rate. -1 for failure.
+     */
+    public BigDecimal getTaxRate() {
+        if (seek != null) {
+            return convert_ToTaxRate(seek.getProgress());
+        } else {
+            return new BigDecimal(-1);
+        }
+    }
 
     interface onSeekChanged{
         /**
@@ -59,7 +72,7 @@ public class TaxFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment TaxFragment.
      */
-    // TODO: Rename and change types and number of parameters
+
     public static TaxFragment newInstance(String param1, String param2) {
         TaxFragment fragment = new TaxFragment();
         Bundle args = new Bundle();
@@ -100,17 +113,21 @@ public class TaxFragment extends Fragment {
         nfPercentage.setMinimumFractionDigits(2);
 
         // Format for US Dollars
-        nfDollars = NumberFormat.getInstance(Locale.US);
+        nfDollars = NumberFormat.getCurrencyInstance(Locale.US);
         nfDollars.setMaximumFractionDigits(2);
         nfDollars.setMinimumFractionDigits(2);
 
         // Get the TextView that holds the tax rate
         tvTaxRate =root.findViewById(R.id.txtviewTaxRate);
+        tvTaxAmount = root.findViewById(R.id.txtviewTaxAmount);
 
         // get the seek position if it was saved, otherwise default to 0
         int position = getActivity().getPreferences(Context.MODE_PRIVATE).getInt("seek_progress", 0);
         seek.setProgress(position);
         setTaxRateTextView(convert_ToTaxRate(position));
+
+        float taxAmount = getActivity().getPreferences(Context.MODE_PRIVATE).getFloat("tax_amount", 0);
+        setTaxAmountTextView(new BigDecimal(taxAmount));
 
         // Create listener for the seek bar
         seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -148,6 +165,14 @@ public class TaxFragment extends Fragment {
     }
 
     /**
+     * Updates the tax amount in the text view on screen.
+     * @param taxAmount
+     */
+    private void setTaxAmountTextView(BigDecimal taxAmount) {
+        tvTaxAmount.setText(nfDollars.format(taxAmount.doubleValue()));
+    }
+
+    /**
      * Converts the seek bar progress to the tax rate (betweeen 0 and 25%)
      * @param progress int Progress of seek bar (between 0 and 100)
      * @return BigDecimal Equivilant Tax Rate (between 1 and 1.25)
@@ -173,6 +198,7 @@ public class TaxFragment extends Fragment {
         getActivity().getPreferences(Context.MODE_PRIVATE)
                 .edit()
                 .putInt("seek_position", seek.getProgress())
+                .putFloat("tax_amount", Float.parseFloat(tvTaxAmount.getText().toString()))
                 .apply();
     }
 
@@ -196,8 +222,8 @@ public class TaxFragment extends Fragment {
 
     public void updateTaxAmount(BigDecimal itemTotal, BigDecimal taxRate) {
 
-        //ToDo: Calculate Tax Amount
+        BigDecimal taxAmount = itemTotal.multiply(taxRate);
 
-        //ToDo: Update Tax Amount Field
+        setTaxAmountTextView(taxAmount);
     }
 }

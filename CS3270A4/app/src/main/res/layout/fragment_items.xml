@@ -43,7 +43,7 @@
                     android:id="@+id/editText_Item1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:textAlignment="textEnd"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -76,7 +76,7 @@
                     android:id="@+id/editText_Item2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:textAlignment="textEnd"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -108,7 +108,7 @@
                     android:id="@+id/editText_Item3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:textAlignment="textEnd"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -141,7 +141,7 @@
                     android:id="@+id/editText_Item4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:textAlignment="textEnd"
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>

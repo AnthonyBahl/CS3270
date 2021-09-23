@@ -1,5 +1,6 @@
 package edu.weber.cs.w01113559.cs3270a4;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,15 +21,15 @@ import android.view.ViewGroup;
  */
 public class TotalsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private View root;
+    private TextView tvTotal;
+    private NumberFormat nfDollars;
 
     public TotalsFragment() {
         // Required empty public constructor
@@ -37,7 +43,7 @@ public class TotalsFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment TotalsFragment.
      */
-    // TODO: Rename and change types and number of parameters
+
     public static TotalsFragment newInstance(String param1, String param2) {
         TotalsFragment fragment = new TotalsFragment();
         Bundle args = new Bundle();
@@ -61,5 +67,39 @@ public class TotalsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return root = inflater.inflate(R.layout.fragment_totals, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        tvTotal =root.findViewById(R.id.txtviewTotalAmount);
+
+        // Format for US Dollars
+        nfDollars = NumberFormat.getCurrencyInstance(Locale.US);
+        nfDollars.setMaximumFractionDigits(2);
+        nfDollars.setMinimumFractionDigits(2);
+
+        // Check to see if there is a default saved in the preferences.
+        float totalAmount = getActivity().getPreferences(Context.MODE_PRIVATE).getFloat("total_amount", 0);
+        tvTotal.setText(nfDollars.format(totalAmount));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        // Save current value of Total to the Preferences
+        getActivity().getPreferences((Context.MODE_PRIVATE))
+                .edit()
+                .putFloat("total_amount", Float.parseFloat(tvTotal.getText().toString()))
+                .apply();
+
+    }
+
+    public void updateTotalAmount(BigDecimal itemTotal, BigDecimal taxRate) {
+        BigDecimal taxNum = taxRate.add(new BigDecimal(1));
+        BigDecimal totalAmount = itemTotal.multiply(taxNum);
+        tvTotal.setText(nfDollars.format(totalAmount));
     }
 }
