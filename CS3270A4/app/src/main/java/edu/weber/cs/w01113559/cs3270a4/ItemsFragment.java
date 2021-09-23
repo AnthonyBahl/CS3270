@@ -2,6 +2,7 @@ package edu.weber.cs.w01113559.cs3270a4;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,13 +10,11 @@ import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -23,22 +22,19 @@ import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ItemsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class ItemsFragment extends Fragment {
 
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     private View root;
-    private NumberFormat nfDollars;
     private TextInputEditText tilItemAmount1;
     private TextInputEditText tilItemAmount2;
     private TextInputEditText tilItemAmount3;
     private TextInputEditText tilItemAmount4;
     private onItemChange mCallBack;
+    private NumberFormat nfDollars;
 
     /**
      * Listener for text values to change.
@@ -97,38 +93,8 @@ public class ItemsFragment extends Fragment {
         void onItemUpdate(BigDecimal newTotal);
     }
 
-    private String mParam1;
-    private String mParam2;
-
     public ItemsFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ItemsFragment.
-     */
-
-    public static ItemsFragment newInstance(String param1, String param2) {
-        ItemsFragment fragment = new ItemsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -153,11 +119,14 @@ public class ItemsFragment extends Fragment {
         tilItemAmount3 = root.findViewById(R.id.editText_Item3);
         tilItemAmount4 = root.findViewById(R.id.editText_Item4);
 
+        // Create Shared Preferences
+        SharedPreferences prefs = getActivity().getPreferences(Context.MODE_PRIVATE);
+
         // Get Values saved in Shared Preferences (if any)
-        float item1 = getActivity().getPreferences(Context.MODE_PRIVATE).getFloat("item_amount_1", -1);
-        float item2 = getActivity().getPreferences(Context.MODE_PRIVATE).getFloat("item_amount_2", -1);
-        float item3 = getActivity().getPreferences(Context.MODE_PRIVATE).getFloat("item_amount_3", -1);
-        float item4 = getActivity().getPreferences(Context.MODE_PRIVATE).getFloat("item_amount_4", -1);
+        float item1 = prefs.getFloat("item_amount_1", -1);
+        float item2 = prefs.getFloat("item_amount_2", -1);
+        float item3 = prefs.getFloat("item_amount_3", -1);
+        float item4 = prefs.getFloat("item_amount_4", -1);
 
         // Set values if any were found
         if (item1 >= 0) {
@@ -182,13 +151,43 @@ public class ItemsFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Activity activity) {
         super.onAttach(activity);
-        /**
-         * Make sure that the activity is implementing our interface. If not then crash the program.
-         */
+
+        // Make sure that the activity is implementing our interface. If not then crash the program.
         try {
             mCallBack = (onItemChange) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException( activity.toString() + "must implement the onItemChange interface.");
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        SharedPreferences prefs = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+
+        if (!(tilItemAmount1.getText().toString().isEmpty())) {
+            BigDecimal value = new BigDecimal(tilItemAmount1.getText().toString());
+            prefsEditor.putFloat("item_amount_1", value.floatValue());
+        }
+
+        if (!(tilItemAmount2.getText().toString().isEmpty())) {
+            BigDecimal value = new BigDecimal(tilItemAmount2.getText().toString());
+            prefsEditor.putFloat("item_amount_2", value.floatValue());
+        }
+
+        if (!(tilItemAmount3.getText().toString().isEmpty())) {
+            BigDecimal value = new BigDecimal(tilItemAmount3.getText().toString());
+            prefsEditor.putFloat("item_amount_3", value.floatValue());
+        }
+
+        if (!(tilItemAmount4.getText().toString().isEmpty())) {
+            BigDecimal value = new BigDecimal(tilItemAmount4.getText().toString());
+            prefsEditor.putFloat("item_amount_4", value.floatValue());
+        }
+
+        prefsEditor.apply();
+
     }
 }

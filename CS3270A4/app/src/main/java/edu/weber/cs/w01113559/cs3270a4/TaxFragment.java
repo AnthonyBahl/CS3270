@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +19,8 @@ import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TaxFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class TaxFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     private SeekBar seek;
     private View root;
     private onSeekChanged mCallback;
@@ -36,9 +28,8 @@ public class TaxFragment extends Fragment {
     private NumberFormat nfDollars;
     private TextView tvTaxRate;
     private TextView tvTaxAmount;
-
-    private String mParam1;
-    private String mParam2;
+    private float currentTaxRate;
+    private float currentTaxAmount;
 
     /**
      *
@@ -64,32 +55,6 @@ public class TaxFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TaxFragment.
-     */
-
-    public static TaxFragment newInstance(String param1, String param2) {
-        TaxFragment fragment = new TaxFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -122,11 +87,12 @@ public class TaxFragment extends Fragment {
         tvTaxAmount = root.findViewById(R.id.txtviewTaxAmount);
 
         // get the seek position if it was saved, otherwise default to 0
-        int position = getActivity().getPreferences(Context.MODE_PRIVATE).getInt("seek_progress", 0);
+        SharedPreferences prefs = getActivity().getPreferences(Context.MODE_PRIVATE);
+        int position = prefs.getInt("seek_position", 0);
         seek.setProgress(position);
         setTaxRateTextView(convert_ToTaxRate(position));
 
-        float taxAmount = getActivity().getPreferences(Context.MODE_PRIVATE).getFloat("tax_amount", 0);
+        float taxAmount = prefs.getFloat("tax_amount", 0);
         setTaxAmountTextView(new BigDecimal(taxAmount));
 
         // Create listener for the seek bar
@@ -158,17 +124,19 @@ public class TaxFragment extends Fragment {
 
     /**
      * Updates the tax rate in the text view on screen.
-     * @param taxRate
+     * @param taxRate BigDecimal - Tax Rate.
      */
     private void setTaxRateTextView(BigDecimal taxRate) {
+        currentTaxRate = taxRate.floatValue();
         tvTaxRate.setText(nfPercentage.format(taxRate.doubleValue()));
     }
 
     /**
      * Updates the tax amount in the text view on screen.
-     * @param taxAmount
+     * @param taxAmount BigDecimal tax Amount
      */
     private void setTaxAmountTextView(BigDecimal taxAmount) {
+        currentTaxAmount = taxAmount.floatValue();
         tvTaxAmount.setText(nfDollars.format(taxAmount.doubleValue()));
     }
 
@@ -180,11 +148,11 @@ public class TaxFragment extends Fragment {
     private BigDecimal convert_ToTaxRate(int progress) {
 
         BigDecimal bdProgress = new BigDecimal(progress);
-        BigDecimal bdMaxTaxRate = new BigDecimal(.25);
+        BigDecimal bdMaxTaxRate = new BigDecimal(".25");
         BigDecimal bdMaxProgress = new BigDecimal(100);
 
         // Use Ratios to compute the equivilant tax rate based on seekbar progression.
-        return bdProgress.multiply(bdMaxTaxRate).divide(bdMaxProgress);
+        return bdProgress.multiply(bdMaxTaxRate).divide(bdMaxProgress, RoundingMode.HALF_UP);
     }
 
     /**
@@ -194,12 +162,14 @@ public class TaxFragment extends Fragment {
     public void onPause() {
         super.onPause();
 
+        int currentProgress = seek.getProgress();
         // Save Seek Bar Position
-        getActivity().getPreferences(Context.MODE_PRIVATE)
-                .edit()
-                .putInt("seek_position", seek.getProgress())
-                .putFloat("tax_amount", Float.parseFloat(tvTaxAmount.getText().toString()))
-                .apply();
+        SharedPreferences prefs = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+
+        prefsEditor.putInt("seek_position", currentProgress);
+        prefsEditor.putFloat("tax_amount", currentTaxAmount);
+        prefsEditor.apply();
     }
 
     /**
@@ -210,9 +180,8 @@ public class TaxFragment extends Fragment {
     public void onAttach(@NonNull Activity activity) {
         super.onAttach(activity);
 
-        /**
-         * Make sure that the activity is implementing our interface. If not then crash the program.
-         */
+
+        // Make sure that the activity is implementing our interface. If not then crash the program.
         try {
             mCallback = (onSeekChanged) activity;
         } catch (ClassCastException e) {

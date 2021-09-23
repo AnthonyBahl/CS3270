@@ -14,52 +14,15 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TotalsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class TotalsFragment extends Fragment {
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
     private View root;
     private TextView tvTotal;
     private NumberFormat nfDollars;
+    private Float currentTotal;
 
     public TotalsFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TotalsFragment.
-     */
-
-    public static TotalsFragment newInstance(String param1, String param2) {
-        TotalsFragment fragment = new TotalsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -82,6 +45,7 @@ public class TotalsFragment extends Fragment {
 
         // Check to see if there is a default saved in the preferences.
         float totalAmount = getActivity().getPreferences(Context.MODE_PRIVATE).getFloat("total_amount", 0);
+        currentTotal = totalAmount;
         tvTotal.setText(nfDollars.format(totalAmount));
     }
 
@@ -92,7 +56,7 @@ public class TotalsFragment extends Fragment {
         // Save current value of Total to the Preferences
         getActivity().getPreferences((Context.MODE_PRIVATE))
                 .edit()
-                .putFloat("total_amount", Float.parseFloat(tvTotal.getText().toString()))
+                .putFloat("total_amount", currentTotal)
                 .apply();
 
     }
@@ -100,6 +64,7 @@ public class TotalsFragment extends Fragment {
     public void updateTotalAmount(BigDecimal itemTotal, BigDecimal taxRate) {
         BigDecimal taxNum = taxRate.add(new BigDecimal(1));
         BigDecimal totalAmount = itemTotal.multiply(taxNum);
+        currentTotal = totalAmount.floatValue();
         tvTotal.setText(nfDollars.format(totalAmount));
     }
 }
