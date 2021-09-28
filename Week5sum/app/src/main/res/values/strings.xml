@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Week5sum</string>
+    <string name="settings">Settings</string>
+    <string name="done">Done</string>
 </resources>
