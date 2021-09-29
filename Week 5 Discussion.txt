@@ -1,0 +1,3 @@
+So apperantly there are even more lifecycles than we knew about before (onCreateOptionsMenu). It's also confusing that it passes in a menu on that create function, but we don't really have a menu. Unless it's invisible and we're just assigning a format to it? But then why are we inflating something?
+
+I've been trying to order my Overridden methods by when they happen, to try and help learn the lifecycle. But its hard now because there are so many new methods that look like lifecycles but aren't included in that diagram.
