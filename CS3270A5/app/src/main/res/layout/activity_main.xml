@@ -5,4 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity" />
+    tools:context=".MainActivity">
+
+    <fragment
+        android:id="@+id/changeResultsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:name="edu.weber.cs.w01113559.cs3270a5.ChangeResults" />
+
+    <fragment
+        android:id="@+id/changeButtonsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="edu.weber.cs.w01113559.cs3270a5.ChangeButtons" />
+
+</LinearLayout>

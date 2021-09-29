@@ -6,4 +6,6 @@
     <string name="change_to_make">Change to Make</string>
     <string name="change_total_so_far">Change total so far</string>
     <string name="_0_00">$0.00</string>
+    <string name="new_amount">NEW AMOUNT</string>
+    <string name="start_over">START OVER</string>
 </resources>
