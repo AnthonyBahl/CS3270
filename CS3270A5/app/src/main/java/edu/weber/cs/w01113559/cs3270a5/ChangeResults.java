@@ -152,12 +152,12 @@ public class ChangeResults extends Fragment {
                 case 0:
                     // User has successfully matched the amounts.
                     mCallback.roundEnd(true);
-                    //timer.cancel();
+                    timer.cancel();
                     break;
                 case 1:
                     // User has gone over the 'Change to Make' amount.
                     mCallback.roundEnd(false);
-                    //timer.cancel();
+                    timer.cancel();
                     break;
             }
         }

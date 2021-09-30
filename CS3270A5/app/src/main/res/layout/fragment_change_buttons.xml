@@ -13,47 +13,52 @@
 
         <Button
             android:id="@+id/btn_50"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:enabled="false"
             android:text="@string/_50"/>
 
         <Button
             android:id="@+id/btn_20"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:enabled="false"
             android:text="@string/_20"/>
 
         <Button
             android:id="@+id/btn_10"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:enabled="false"
             android:text="@string/_10"/>
 
         <Button
             android:id="@+id/btn_05"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:enabled="false"
             android:text="@string/_5"/>
 
         <Button
             android:id="@+id/btn_01"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:enabled="false"
             android:text="@string/_1"/>
 
     </TableRow>
@@ -64,47 +69,52 @@
 
         <Button
             android:id="@+id/btn_0_50"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:enabled="false"
             android:text="@string/_0_50"/>
 
         <Button
             android:id="@+id/btn_0_25"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:enabled="false"
             android:text="@string/_0_25"/>
 
         <Button
             android:id="@+id/btn_0_10"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:enabled="false"
             android:text="@string/_0_10"/>
 
         <Button
             android:id="@+id/btn_0_05"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:enabled="false"
             android:text="@string/_0_05"/>
 
         <Button
             android:id="@+id/btn_0_01"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:enabled="false"
             android:text="@string/_0_01"/>
 
     </TableRow>
