@@ -6,9 +6,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import java.math.BigDecimal;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,10 +20,25 @@ import android.view.ViewGroup;
 public class ChangeButtons extends Fragment {
 
     private View root;
-    // ToDo: create variables for each button
-    // ToDo: create mCallback
+    private Button btn50;
+    private Button btn20;
+    private Button btn10;
+    private Button btn5;
+    private Button btn1;
+    private Button btn050;
+    private Button btn025;
+    private Button btn010;
+    private Button btn005;
+    private Button btn001;
+    private onButtonPress mCallBack;
 
-    // ToDo: Create interface
+    interface onButtonPress {
+        /**
+         * Passes the value of the button pressed
+         * @param value BigDecimal: amount of change to be added.
+         */
+        void onButtonPress(BigDecimal value);
+    }
 
     public ChangeButtons() {
         // Required empty public constructor
@@ -36,9 +55,40 @@ public class ChangeButtons extends Fragment {
     public void onResume() {
         super.onResume();
 
-        // ToDo: Instantiate variables for buttons
+        btn50 = root.findViewById(R.id.btn_50);
+        btn20 = root.findViewById(R.id.btn_20);
+        btn10 = root.findViewById(R.id.btn_10);
+        btn5 = root.findViewById(R.id.btn_05);
+        btn1 = root.findViewById(R.id.btn_01);
+        btn050 = root.findViewById(R.id.btn_0_50);
+        btn025 = root.findViewById(R.id.btn_0_25);
+        btn010 = root.findViewById(R.id.btn_0_10);
+        btn005 = root.findViewById(R.id.btn_0_05);
+        btn001 = root.findViewById(R.id.btn_0_01);
 
-        // ToDo: Attach on Button Listener to each button
+        // Set Button Tags
+        btn50.setTag("50");
+        btn20.setTag("20");
+        btn10.setTag("10");
+        btn5.setTag("5");
+        btn1.setTag("1");
+        btn050.setTag("0.50");
+        btn025.setTag("0.25");
+        btn010.setTag("0.10");
+        btn005.setTag("0.05");
+        btn001.setTag("0.01");
+
+        // Attach on Button Listener to each button
+        btn50.setOnClickListener(buttonListener);
+        btn20.setOnClickListener(buttonListener);
+        btn10.setOnClickListener(buttonListener);
+        btn5.setOnClickListener(buttonListener);
+        btn1.setOnClickListener(buttonListener);
+        btn050.setOnClickListener(buttonListener);
+        btn025.setOnClickListener(buttonListener);
+        btn010.setOnClickListener(buttonListener);
+        btn005.setOnClickListener(buttonListener);
+        btn001.setOnClickListener(buttonListener);
 
     }
 
@@ -46,13 +96,55 @@ public class ChangeButtons extends Fragment {
     public void onAttach(@NonNull Activity activity) {
         super.onAttach(activity);
 
-        // ToDo: Verify that they implement the interface
+        // Verify that they implement the interface
+        try {
+            mCallBack = (onButtonPress) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException( activity.toString() + " must implement onButtonPress interface.");
+        }
 
     }
 
-    // ToDo: Create on Button listener for all buttons (one function)
+    // Button listener for all buttons
+    private final View.OnClickListener buttonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // Get Value from tag
+            String value = v.getTag().toString();
+            // Call onButtonPress
+            mCallBack.onButtonPress(new BigDecimal(value));
+        }
+    };
 
-    // ToDo: Enable Buttons function
+    /**
+     * Enables all change buttons.
+     */
+    public void enableButtons(){
+        btn50.setEnabled(true);
+        btn20.setEnabled(true);
+        btn10.setEnabled(true);
+        btn5.setEnabled(true);
+        btn1.setEnabled(true);
+        btn050.setEnabled(true);
+        btn025.setEnabled(true);
+        btn010.setEnabled(true);
+        btn005.setEnabled(true);
+        btn001.setEnabled(true);
+    }
 
-    // ToDo: Disable Buttons function
+    /**
+     * Disables all change buttons.
+     */
+    public void disableButtons(){
+        btn50.setEnabled(false);
+        btn20.setEnabled(false);
+        btn10.setEnabled(false);
+        btn5.setEnabled(false);
+        btn1.setEnabled(false);
+        btn050.setEnabled(false);
+        btn025.setEnabled(false);
+        btn010.setEnabled(false);
+        btn005.setEnabled(false);
+        btn001.setEnabled(false);
+    }
 }

@@ -110,7 +110,7 @@ public class ChangeResults extends Fragment {
 
         } catch (ClassCastException e) {
 
-            throw new ClassCastException( activity.toString() + "must implement the roundActions interface.");
+            throw new ClassCastException( activity.toString() + " must implement the roundActions interface.");
 
         }
 
@@ -153,11 +153,13 @@ public class ChangeResults extends Fragment {
                     // User has successfully matched the amounts.
                     mCallback.roundEnd(true);
                     timer.cancel();
+                    // ToDo: Add Dialog to say that they were correct
                     break;
                 case 1:
                     // User has gone over the 'Change to Make' amount.
                     mCallback.roundEnd(false);
                     timer.cancel();
+                    // ToDo: Add Dialog to say that they were incorrect
                     break;
             }
         }
@@ -314,7 +316,14 @@ public class ChangeResults extends Fragment {
      * Creates and starts a new CountDownTimer and stores it in 'timer'.
      */
     private void startTimer() {
-        timer = new CountDownTimer(30000, 1000) {
+
+        // Cancel Timer if there is already a timer active
+        if ( timer != null ) {
+            timer.cancel();
+        }
+
+        // Create new timer
+        timer = new CountDownTimer(31000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -326,15 +335,20 @@ public class ChangeResults extends Fragment {
             @Override
             public void onFinish() {
 
+                // Update the Time Remaining Text Field
+                updateTimeRemaining(0);
+
                 switch (checkValues()){
                     case -1:
                     case 1:
                         // User was under or went over the 'Change to Make' value.
                         mCallback.roundEnd(false);
+                        // ToDo: Add Dialog to say that Time is Up
                         break;
                     case 0:
                         // User matched the 'Change to Make' value.
                         mCallback.roundEnd(true);
+                        // ToDo: Add Dialog to say that they were correct
                         break;
                 }
 
@@ -367,6 +381,19 @@ public class ChangeResults extends Fragment {
         // Generate new Random value for "Change to Make"
         BigDecimal randomBigDecimal = getRandomChangeToMake();
         updateChangeToMake(randomBigDecimal);
+
+        // Clear out values for "Change so far"
+        updateChangeSoFar(new BigDecimal(0));
+
+        // Start timer
+        startTimer();
+
+    }
+
+    /**
+     * Clears current values for 'Change so far' and resets timer, but does not change 'Change to Make'.
+     */
+    public void resetRound() {
 
         // Clear out values for "Change so far"
         updateChangeSoFar(new BigDecimal(0));

@@ -8,6 +8,8 @@
     android:layout_margin="8dp">
 
     <!-- ToDo: Create toolbar -->
+    <!-- ToDo: Add Zero Correct Count Settings Option -->
+    <!-- ToDo: Add Set Change Max Settings Option -->
 
     <TextView
         android:layout_width="match_parent"

@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">CS3270A5 Bahl</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="practice_making_change">Practice Making Change</string>
     <string name="change_to_make">Change to Make</string>
     <string name="change_total_so_far">Change total so far</string>
