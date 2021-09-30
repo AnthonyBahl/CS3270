@@ -34,19 +34,23 @@
         android:id="@+id/correctChangeCountLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Correct Change Count"
+        android:text="@string/correct_change_count"
         android:layout_margin="8dp"
+        android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_start_over" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_start_over"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/correctChangeCountTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="0"
-        android:gravity="bottom|right"
+        android:text="@string/_0"
+        android:textSize="25sp"
+        android:gravity="bottom|end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/correctChangeCountLabel"
-        app:layout_constraintTop_toBottomOf="@+id/btn_new_amount" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_new_amount"
+        android:textColor="@color/black" />
 </androidx.constraintlayout.widget.ConstraintLayout>

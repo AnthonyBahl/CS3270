@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:layout_marginBottom="16dp"
     tools:context=".ChangeButtons">
 
     <TableRow
@@ -16,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="$50"/>
+            android:text="@string/_50"/>
 
         <Button
             android:id="@+id/btn_20"
@@ -25,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="$20"/>
+            android:text="@string/_20"/>
 
         <Button
             android:id="@+id/btn_10"
@@ -34,7 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="$10"/>
+            android:text="@string/_10"/>
 
         <Button
             android:id="@+id/btn_05"
@@ -43,7 +45,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="$5"/>
+            android:text="@string/_5"/>
 
         <Button
             android:id="@+id/btn_01"
@@ -52,7 +54,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="$1"/>
+            android:text="@string/_1"/>
 
     </TableRow>
 
@@ -67,7 +69,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=".50"/>
+            android:text="@string/_0_50"/>
 
         <Button
             android:id="@+id/btn_0_25"
@@ -76,7 +78,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=".25"/>
+            android:text="@string/_0_25"/>
 
         <Button
             android:id="@+id/btn_0_10"
@@ -85,7 +87,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=".10"/>
+            android:text="@string/_0_10"/>
 
         <Button
             android:id="@+id/btn_0_05"
@@ -94,7 +96,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=".05"/>
+            android:text="@string/_0_05"/>
 
         <Button
             android:id="@+id/btn_0_01"
@@ -103,7 +105,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=".01"/>
+            android:text="@string/_0_01"/>
 
     </TableRow>
 </TableLayout>

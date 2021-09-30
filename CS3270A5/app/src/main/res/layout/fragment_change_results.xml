@@ -32,7 +32,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="bottom|end"
-            android:text="@string/_0_00"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -52,11 +51,34 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/changeSoFarTextView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="bottom|end"
-            android:text="@string/_0_00"
             android:textColor="@color/grey_blue"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/time_remaining"
+            android:textSize="25sp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/timeRemainingTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom|end"
+            android:textColor="@android:color/holo_green_dark"
             android:textSize="20sp" />
 
     </LinearLayout>
