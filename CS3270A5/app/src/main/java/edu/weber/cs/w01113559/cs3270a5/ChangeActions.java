@@ -149,4 +149,11 @@ public class ChangeActions extends Fragment {
     public void setStartOverButton(boolean value) {
         btnStartOver.setEnabled(value);
     }
+
+    /**
+     * Resets the value of CorrectChangeCount to 0.
+     */
+    public void resetCorrectChangeCount() {
+        setCorrectChangeCount(0);
+    }
 }

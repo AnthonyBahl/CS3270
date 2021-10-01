@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.CountDownTimer;
@@ -17,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -40,19 +40,28 @@ public class ChangeResults extends Fragment {
     private BigDecimal bdCurrentChangeToMake;
     private BigDecimal bdCurrentChangeSoFar;
     private int iCurrentTimeRemaining;
+    /**
+     * Determines if there is a round currently active
+     */
+    private boolean bRoundActive;
 
     // Interface to be implemented by the activity
     interface roundActions {
         /**
          * Completes the round.
-         * @param result boolean: true - user matched the change, false - user failed to match the change.
+         * @param result int: 1- Time ran out, 2- Went over on change, 3- Successfully made change.
          */
-        void roundEnd(boolean result);
+        void roundEnd(int result);
     }
 
     // Constructor
     public ChangeResults() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate( Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -151,15 +160,11 @@ public class ChangeResults extends Fragment {
             switch (checkValues()) {
                 case 0:
                     // User has successfully matched the amounts.
-                    mCallback.roundEnd(true);
-                    timer.cancel();
-                    // ToDo: Add Dialog to say that they were correct
+                    endRound(3);
                     break;
                 case 1:
                     // User has gone over the 'Change to Make' amount.
-                    mCallback.roundEnd(false);
-                    timer.cancel();
-                    // ToDo: Add Dialog to say that they were incorrect
+                    endRound(2);
                     break;
             }
         }
@@ -251,7 +256,7 @@ public class ChangeResults extends Fragment {
      * Updates the "Change so far" field.
      * @param value value to put into the "Change so far" field.
      */
-    private void updateChangeSoFar(BigDecimal value) {
+    public void updateChangeSoFar(BigDecimal value) {
 
         // Validate value
         if (value.compareTo(new BigDecimal(0)) < 0) {
@@ -338,17 +343,18 @@ public class ChangeResults extends Fragment {
                 // Update the Time Remaining Text Field
                 updateTimeRemaining(0);
 
+                // Compare the values
                 switch (checkValues()){
                     case -1:
-                    case 1:
-                        // User was under or went over the 'Change to Make' value.
-                        mCallback.roundEnd(false);
-                        // ToDo: Add Dialog to say that Time is Up
-                        break;
+                        // User was under the 'Change to Make' Value'
+                        endRound(1);
                     case 0:
                         // User matched the 'Change to Make' value.
-                        mCallback.roundEnd(true);
-                        // ToDo: Add Dialog to say that they were correct
+                        endRound(3);
+                        break;
+                    case 1:
+                        // User went over the 'Change to Make' value.
+                        endRound(2);
                         break;
                 }
 
@@ -388,6 +394,9 @@ public class ChangeResults extends Fragment {
         // Start timer
         startTimer();
 
+        // Activate round
+        bRoundActive = true;
+
     }
 
     /**
@@ -401,6 +410,34 @@ public class ChangeResults extends Fragment {
         // Start timer
         startTimer();
 
+        // Activate round
+        bRoundActive = true;
+    }
+
+    /**
+     * Ends the active round
+     * @param result int: 1- Time ran out, 2- Went over on change, 3- Successfully made change.
+     * @return boolean: true- on success, false- on failure.
+     */
+    private boolean endRound(int result) {
+        if (bRoundActive) {
+
+            // Deactivate round
+            bRoundActive = false;
+
+            // Turn off Timer
+            timer.cancel();
+
+            // Call Activity to end round
+            mCallback.roundEnd(result);
+
+            // Return true for success
+            return true;
+
+        } else {
+            // There is no active round
+            return false;
+        }
     }
 
     /**
@@ -408,6 +445,13 @@ public class ChangeResults extends Fragment {
      * @param change BigDecimal: change to add to the 'Change so Far' value.
      */
     public void addChange(BigDecimal change) {
-        updateChangeSoFar(bdCurrentChangeSoFar.add(change));
+
+        // Make sure there is an active round
+        if (bRoundActive) {
+
+            // Update Change Amount
+            updateChangeSoFar(bdCurrentChangeSoFar.add(change));
+
+        }
     }
 }

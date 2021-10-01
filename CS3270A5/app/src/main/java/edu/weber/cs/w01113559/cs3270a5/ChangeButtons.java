@@ -115,36 +115,4 @@ public class ChangeButtons extends Fragment {
             mCallBack.onButtonPress(new BigDecimal(value));
         }
     };
-
-    /**
-     * Enables all change buttons.
-     */
-    public void enableButtons(){
-        btn50.setEnabled(true);
-        btn20.setEnabled(true);
-        btn10.setEnabled(true);
-        btn5.setEnabled(true);
-        btn1.setEnabled(true);
-        btn050.setEnabled(true);
-        btn025.setEnabled(true);
-        btn010.setEnabled(true);
-        btn005.setEnabled(true);
-        btn001.setEnabled(true);
-    }
-
-    /**
-     * Disables all change buttons.
-     */
-    public void disableButtons(){
-        btn50.setEnabled(false);
-        btn20.setEnabled(false);
-        btn10.setEnabled(false);
-        btn5.setEnabled(false);
-        btn1.setEnabled(false);
-        btn050.setEnabled(false);
-        btn025.setEnabled(false);
-        btn010.setEnabled(false);
-        btn005.setEnabled(false);
-        btn001.setEnabled(false);
-    }
 }

@@ -3,8 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <!-- ToDo: Add Zero Correct Count Settings Option -->
+    <!-- ToDo: Add Set Change Max Settings Option -->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:titleTextColor="@color/white"
+        android:elevation="4dp" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/changeResultsFragment"
@@ -17,14 +31,14 @@
         android:id="@+id/changeButtonsFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="edu.weber.cs.w01113559.cs3270a5.ChangeButtons"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        android:name="edu.weber.cs.w01113559.cs3270a5.ChangeButtons"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/changeActionsFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="edu.weber.cs.w01113559.cs3270a5.ChangeActions"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        android:name="edu.weber.cs.w01113559.cs3270a5.ChangeActions"/>
 
 </LinearLayout>

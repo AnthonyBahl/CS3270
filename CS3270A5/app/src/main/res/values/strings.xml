@@ -19,4 +19,14 @@
     <string name="_0_01">.01</string>
     <string name="correct_change_count">Correct Change Count</string>
     <string name="time_remaining">Time Remaining</string>
+    <string name="zero_correct_count">Zero Correct Count</string>
+    <string name="set_change_max">Set Change Max</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="times_up">Time\'s Up!</string>
+    <string name="_try_again">You should try again.</string>
+    <string name="too_much_change">That\'s too much change.</string>
+    <string name="you_did_it">You did it!</string>
+    <string name="go_again">You should go again.</string>
+    <string name="_ok">Ok</string>
 </resources>
