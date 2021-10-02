@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.math.BigDecimal;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -24,7 +22,6 @@ public class ChangeActions extends Fragment {
     private View root;
     private TextView tvCorrectChangeCount;
     private Button btnStartOver;
-    private Button btnNewAmount;
     private changeActions mCallBack;
     private SharedPreferences preferences;
     private int iCorrectChangeCount;
@@ -61,7 +58,7 @@ public class ChangeActions extends Fragment {
 
         // Instantiate Buttons
         btnStartOver = root.findViewById(R.id.btn_start_over);
-        btnNewAmount = root.findViewById(R.id.btn_new_amount);
+        Button btnNewAmount = root.findViewById(R.id.btn_new_amount);
 
         // Create on Click listener for buttons
         btnStartOver.setOnClickListener(new View.OnClickListener() {

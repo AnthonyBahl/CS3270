@@ -28,7 +28,6 @@ public class maxChangeFragment extends Fragment {
     private SharedPreferences preferences;
     private NumberFormat nfMaxValue;
     private TextView tvMaxChange;
-    private Button btnSave;
     private maxChangeInterface mCallback;
 
     interface maxChangeInterface {
@@ -85,7 +84,7 @@ public class maxChangeFragment extends Fragment {
         setMaxChangeTextBox(currentMaxChange);
 
         // Instantiate Save Button
-        btnSave = root.findViewById(R.id.action_save_max_change);
+        Button btnSave = root.findViewById(R.id.action_save_max_change);
 
         // Set On Click Listener for the Save Button
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +113,7 @@ public class maxChangeFragment extends Fragment {
         String sMaxChange = preferences.getString("temp_maximum_value", "-1");
 
         // If no temp_maximum_value, get the last saved value.
-        if (sMaxChange == "-1") {
+        if (sMaxChange.equals("-1")) {
 
             sMaxChange = preferences.getString("maximum_value", "50");
 
@@ -125,21 +124,12 @@ public class maxChangeFragment extends Fragment {
     /**
      * Sets the value of the 'Max Change' Text Box.
      * @param currentMaxChange BigDecimal: Max Change Value.
-     * @return boolean: true- success, false- failure.
      */
-    private boolean setMaxChangeTextBox(BigDecimal currentMaxChange) {
-        // Create return object
-        Object[] objReturn = new Object[2];
+    private void setMaxChangeTextBox(BigDecimal currentMaxChange) {
 
         // Validate currentMaxChange is > 0
         if (currentMaxChange.compareTo(new BigDecimal(0)) > 0) {
             tvMaxChange.setText(nfMaxValue.format(currentMaxChange.doubleValue()));
-            return true;
-        } else {
-            // currentMaxChange <= 0
-            objReturn[0] = new Boolean(false);
-            objReturn[1] = new String("Value must be > 0");
-            return false;
         }
     }
 }

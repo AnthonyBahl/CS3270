@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.CountDownTimer;
@@ -416,18 +415,16 @@ public class ChangeResults extends Fragment {
 
     /**
      * Ends the active round if there is one
-     * @return boolean: true- round ended, false- no active round.
      */
-    public boolean endRound() {
-        return endRound(0);
+    public void endRound() {
+        endRound(0);
     }
 
     /**
      * Ends the active round
      * @param result int: 0- Manual Round End, 1- Time ran out, 2- Went over on change, 3- Successfully made change
-     * @return boolean: true- on success, false- on failure.
      */
-    private boolean endRound(int result) {
+    private void endRound(int result) {
         if (bRoundActive) {
 
             // Deactivate round
@@ -441,13 +438,6 @@ public class ChangeResults extends Fragment {
                 // Call Activity to end round
                 mCallback.roundEnd(result);
             }
-
-            // Return true for success
-            return true;
-
-        } else {
-            // There is no active round
-            return false;
         }
     }
 

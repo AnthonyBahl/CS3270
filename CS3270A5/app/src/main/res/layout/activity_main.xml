@@ -7,9 +7,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <!-- ToDo: Add Zero Correct Count Settings Option -->
-    <!-- ToDo: Add Set Change Max Settings Option -->
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"

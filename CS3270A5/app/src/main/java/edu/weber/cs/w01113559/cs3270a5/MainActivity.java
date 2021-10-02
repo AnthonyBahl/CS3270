@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity
      * @param value BigDecimal: amount of change to be added.
      */
     @Override
-    public void onButtonPress(BigDecimal value) {
+    public void onbuttonpress(BigDecimal value) {
 
         // Make sure fragment variables are not null
         instantiateFragments();

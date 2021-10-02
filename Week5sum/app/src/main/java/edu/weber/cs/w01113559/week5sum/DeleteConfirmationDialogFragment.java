@@ -19,6 +19,8 @@ import android.view.ViewGroup;
  */
 public class DeleteConfirmationDialogFragment extends DialogFragment {
 
+    private int test;
+
     public DeleteConfirmationDialogFragment() {
         // Required empty public constructor
     }
@@ -43,7 +45,6 @@ public class DeleteConfirmationDialogFragment extends DialogFragment {
                         //ToDo: Cancel logic
                     }
                 });
-
         return builder.create();
     }
 }

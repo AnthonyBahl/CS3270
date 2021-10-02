@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +19,6 @@ import java.math.BigDecimal;
 public class ChangeButtons extends Fragment {
 
     private View root;
-    private Button btn50;
-    private Button btn20;
-    private Button btn10;
-    private Button btn5;
-    private Button btn1;
-    private Button btn050;
-    private Button btn025;
-    private Button btn010;
-    private Button btn005;
-    private Button btn001;
     private onButtonPress mCallBack;
 
     interface onButtonPress {
@@ -37,7 +26,7 @@ public class ChangeButtons extends Fragment {
          * Passes the value of the button pressed
          * @param value BigDecimal: amount of change to be added.
          */
-        void onButtonPress(BigDecimal value);
+        void onbuttonpress(BigDecimal value);
     }
 
     public ChangeButtons() {
@@ -55,16 +44,16 @@ public class ChangeButtons extends Fragment {
     public void onResume() {
         super.onResume();
 
-        btn50 = root.findViewById(R.id.btn_50);
-        btn20 = root.findViewById(R.id.btn_20);
-        btn10 = root.findViewById(R.id.btn_10);
-        btn5 = root.findViewById(R.id.btn_05);
-        btn1 = root.findViewById(R.id.btn_01);
-        btn050 = root.findViewById(R.id.btn_0_50);
-        btn025 = root.findViewById(R.id.btn_0_25);
-        btn010 = root.findViewById(R.id.btn_0_10);
-        btn005 = root.findViewById(R.id.btn_0_05);
-        btn001 = root.findViewById(R.id.btn_0_01);
+        Button btn50 = root.findViewById(R.id.btn_50);
+        Button btn20 = root.findViewById(R.id.btn_20);
+        Button btn10 = root.findViewById(R.id.btn_10);
+        Button btn5 = root.findViewById(R.id.btn_05);
+        Button btn1 = root.findViewById(R.id.btn_01);
+        Button btn050 = root.findViewById(R.id.btn_0_50);
+        Button btn025 = root.findViewById(R.id.btn_0_25);
+        Button btn010 = root.findViewById(R.id.btn_0_10);
+        Button btn005 = root.findViewById(R.id.btn_0_05);
+        Button btn001 = root.findViewById(R.id.btn_0_01);
 
         // Set Button Tags
         btn50.setTag("50");
@@ -112,7 +101,7 @@ public class ChangeButtons extends Fragment {
             // Get Value from tag
             String value = v.getTag().toString();
             // Call onButtonPress
-            mCallBack.onButtonPress(new BigDecimal(value));
+            mCallBack.onbuttonpress(new BigDecimal(value));
         }
     };
 }

@@ -179,8 +179,6 @@ public class TaxFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Activity activity) {
         super.onAttach(activity);
-
-
         // Make sure that the activity is implementing our interface. If not then crash the program.
         try {
             mCallback = (onSeekChanged) activity;
