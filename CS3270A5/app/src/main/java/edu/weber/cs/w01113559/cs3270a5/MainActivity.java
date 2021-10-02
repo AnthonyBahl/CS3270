@@ -11,7 +11,12 @@ import android.view.MenuItem;
 
 import java.math.BigDecimal;
 
-public class MainActivity extends AppCompatActivity implements ChangeResults.roundActions, ChangeButtons.onButtonPress, ChangeActions.changeActions, roundResultFragment.dialogInterface {
+public class MainActivity extends AppCompatActivity
+        implements ChangeResults.roundActions
+        , ChangeButtons.onButtonPress
+        , ChangeActions.changeActions
+        , roundResultFragment.dialogInterface
+        , maxChangeFragment.maxChangeInterface {
 
     private FragmentManager fragmentManager;
     private ChangeResults changeResultsFragment;
@@ -46,12 +51,33 @@ public class MainActivity extends AppCompatActivity implements ChangeResults.rou
         return true;
     }
 
+    /**
+     * Makes sure that each of the Fragment variables is not null.
+     */
+    private void instantiateFragments() {
+
+        // Make sure changeResultsFragment isn't null
+        if (changeResultsFragment == null) {
+            changeResultsFragment = (ChangeResults) fragmentManager.findFragmentByTag("changeResultsFrag");
+        }
+
+        // Make sure changeButtonsFragment isn't null
+        if (changeButtonsFragment == null) {
+            changeButtonsFragment = (ChangeButtons) fragmentManager.findFragmentByTag("changeButtonsFrag");
+        }
+
+        // Make sure changeActionsFragment isn't null
+        if (changeActionsFragment == null) {
+            changeActionsFragment = (ChangeActions) fragmentManager.findFragmentByTag("changeActionsFrag");
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId())
         {
-            case R.id.action_zero_correct_count:
+            case R.id.action_zero_correct_count:    // "Zero Correct Count"
 
                 // Make sure fragment variables are not null
                 instantiateFragments();
@@ -61,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements ChangeResults.rou
 
                 return true;
 
-            case R.id.action_set_change_max:
+            case R.id.action_set_change_max:    // "Set Change Max"
                 setMaxChangeScreen();
                 return true;
 
@@ -80,7 +106,10 @@ public class MainActivity extends AppCompatActivity implements ChangeResults.rou
         // Make sure fragment variables are not null
         instantiateFragments();
 
-        // ToDo: Display Dialog
+        // Display Dialog
+        roundResultFragment dialog = new roundResultFragment(result);
+        dialog.setCancelable(false);
+        dialog.show(getSupportFragmentManager(), "dialog");
 
         // If the user succeeded, increment Correct Change Count
         if (result == 3) {
@@ -137,41 +166,6 @@ public class MainActivity extends AppCompatActivity implements ChangeResults.rou
     }
 
     /**
-     * Replaces changeResultsFragment with maxChangeFragment and hides changeButtonsFrag and changeActionsFrag
-     */
-    private void setMaxChangeScreen() {
-
-        fragmentManager.beginTransaction()
-                .replace(R.id.changeResultsFragment, new maxChangeFragment(), "maxChangeFragment")
-                .hide(fragmentManager.findFragmentByTag("changeButtonsFrag"))
-                .hide(fragmentManager.findFragmentByTag("changeActionsFrag"))
-                .commit();
-
-
-    }
-
-    /**
-     * Makes sure that each of the Fragment variables is not null.
-     */
-    private void instantiateFragments() {
-
-        // Make sure changeResultsFragment isn't null
-        if (changeResultsFragment == null) {
-            changeResultsFragment = (ChangeResults) fragmentManager.findFragmentByTag("changeResultsFrag");
-        }
-
-        // Make sure changeButtonsFragment isn't null
-        if (changeButtonsFragment == null) {
-            changeButtonsFragment = (ChangeButtons) fragmentManager.findFragmentByTag("changeButtonsFrag");
-        }
-
-        // Make sure changeActionsFragment isn't null
-        if (changeActionsFragment == null) {
-            changeActionsFragment = (ChangeActions) fragmentManager.findFragmentByTag("changeActionsFrag");
-        }
-    }
-
-    /**
      * Sets the "change so far" to 0
      */
     @Override
@@ -182,6 +176,47 @@ public class MainActivity extends AppCompatActivity implements ChangeResults.rou
 
         // Set 'Change so far' to 0
         changeResultsFragment.updateChangeSoFar(new BigDecimal(0));
+
+    }
+
+    /**
+     * Replaces changeResultsFragment with maxChangeFragment and hides changeButtonsFrag and changeActionsFrag
+     */
+    private void setMaxChangeScreen() {
+
+        // Make sure fragment variables are not null
+        instantiateFragments();
+
+        // End current round if there is one.
+        changeResultsFragment.endRound();
+
+        // Change to Max Change Screen
+        fragmentManager.beginTransaction()
+                .replace(R.id.changeResultsFragment, new maxChangeFragment(), "maxChangeFragment")
+                .hide(fragmentManager.findFragmentByTag("changeButtonsFrag"))
+                .hide(fragmentManager.findFragmentByTag("changeActionsFrag"))
+                .commit();
+
+
+    }
+
+    /**
+     * Removes the edit Max Change Screen and puts back the other screens.
+     */
+    @Override
+    public void finishMaxChangeScreen() {
+
+        // Make sure fragment variables are not null
+        instantiateFragments();
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.changeResultsFragment, new ChangeResults(), "changeResultsFrag")
+                .show(fragmentManager.findFragmentByTag("changeButtonsFrag"))
+                .show(fragmentManager.findFragmentByTag("changeActionsFrag"))
+                .commit();
+
+        // update changeResultsFragment variable
+        changeResultsFragment = (ChangeResults) fragmentManager.findFragmentByTag("changeResultsFrag");
 
     }
 }

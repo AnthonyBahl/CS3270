@@ -60,6 +60,23 @@ public class ChangeResults extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Activity activity) {
+        super.onAttach(activity);
+
+        // Verify that the activity is implementing the timerActions interface.
+        try {
+
+            mCallback = (roundActions) activity;
+
+        } catch (ClassCastException e) {
+
+            throw new ClassCastException( activity.toString() + " must implement the roundActions interface.");
+
+        }
+
+    }
+
+    @Override
     public void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -105,23 +122,6 @@ public class ChangeResults extends Fragment {
         updateChangeToMake();
         updateChangeSoFar();
         updateTimeRemaining();
-
-    }
-
-    @Override
-    public void onAttach(@NonNull Activity activity) {
-        super.onAttach(activity);
-
-        // Verify that the activity is implementing the timerActions interface.
-        try {
-
-            mCallback = (roundActions) activity;
-
-        } catch (ClassCastException e) {
-
-            throw new ClassCastException( activity.toString() + " must implement the roundActions interface.");
-
-        }
 
     }
 
@@ -415,8 +415,16 @@ public class ChangeResults extends Fragment {
     }
 
     /**
+     * Ends the active round if there is one
+     * @return boolean: true- round ended, false- no active round.
+     */
+    public boolean endRound() {
+        return endRound(0);
+    }
+
+    /**
      * Ends the active round
-     * @param result int: 1- Time ran out, 2- Went over on change, 3- Successfully made change.
+     * @param result int: 0- Manual Round End, 1- Time ran out, 2- Went over on change, 3- Successfully made change
      * @return boolean: true- on success, false- on failure.
      */
     private boolean endRound(int result) {
@@ -428,8 +436,11 @@ public class ChangeResults extends Fragment {
             // Turn off Timer
             timer.cancel();
 
-            // Call Activity to end round
-            mCallback.roundEnd(result);
+            // Check to see if round manually ended
+            if (result > 0) {
+                // Call Activity to end round
+                mCallback.roundEnd(result);
+            }
 
             // Return true for success
             return true;

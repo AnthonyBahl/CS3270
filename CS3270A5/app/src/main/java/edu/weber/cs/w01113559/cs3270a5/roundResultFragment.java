@@ -1,5 +1,6 @@
 package edu.weber.cs.w01113559.cs3270a5;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -68,5 +69,22 @@ public class roundResultFragment extends DialogFragment {
 
 
         return builder.create();
+    }
+
+    @Override
+    public void onAttach(@NonNull Activity activity) {
+        super.onAttach(activity);
+        super.onAttach(activity);
+
+        // Verify that the activity is implementing the timerActions interface.
+        try {
+
+            mCallback = (dialogInterface) activity;
+
+        } catch (ClassCastException e) {
+
+            throw new ClassCastException( activity.toString() + " must implement the dialogInterface interface.");
+
+        }
     }
 }
