@@ -72,6 +72,7 @@ public class buttonsFragment extends Fragment {
         root.findViewById(R.id.btn_0).setOnClickListener(buttonListener);
         root.findViewById(R.id.btn_decimal).setOnClickListener(buttonListener);
         root.findViewById(R.id.btn_equals).setOnClickListener(buttonListener);
+        root.findViewById(R.id.btn_parenth).setOnClickListener(buttonListener);
     }
 
     /**
