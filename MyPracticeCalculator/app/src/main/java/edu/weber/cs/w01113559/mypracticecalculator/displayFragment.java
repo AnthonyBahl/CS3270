@@ -23,4 +23,12 @@ public class displayFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_display, container, false);
     }
+
+    /**
+     * Processes input from the user and adds it to the display.
+     * @param tag String: Tag of the button pressed by the user.
+     */
+    public void processInput(String tag){
+        // ToDo: Add Functionality
+    }
 }
