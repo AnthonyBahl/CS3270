@@ -1,6 +1,7 @@
 package edu.weber.cs.w01113559.cs3270a7.db;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -13,6 +14,24 @@ public class Course {
     String course_code;
     String start_at;
     String end_at;
+
+    @Ignore
+    public Course(String id, String name, String course_code, String start_at, String end_at) {
+        this.id = id;
+        this.name = name;
+        this.course_code = course_code;
+        this.start_at = start_at;
+        this.end_at = end_at;
+    }
+
+    public Course(int _id, String id, String name, String course_code, String start_at, String end_at) {
+        this._id = _id;
+        this.id = id;
+        this.name = name;
+        this.course_code = course_code;
+        this.start_at = start_at;
+        this.end_at = end_at;
+    }
 
     public int get_id() {
         return _id;
@@ -60,5 +79,17 @@ public class Course {
 
     public void setEnd_at(String end_at) {
         this.end_at = end_at;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "_id=" + _id +
+                ", id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", course_code='" + course_code + '\'' +
+                ", start_at='" + start_at + '\'' +
+                ", end_at='" + end_at + '\'' +
+                '}';
     }
 }

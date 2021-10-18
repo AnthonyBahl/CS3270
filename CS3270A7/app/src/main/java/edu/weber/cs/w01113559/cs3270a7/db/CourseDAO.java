@@ -9,7 +9,7 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface CourseDOA {
+public interface CourseDAO {
 
     @Insert
     void insertAll(Course... courses);
@@ -58,5 +58,7 @@ public interface CourseDOA {
      */
     @Query("Select * From course WHERE course_code LIKE :code LIMIT 1")
     Course getCourseByCode(String code);
+
+
 
 }
