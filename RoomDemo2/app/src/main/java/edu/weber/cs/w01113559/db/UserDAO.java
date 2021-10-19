@@ -1,5 +1,6 @@
 package edu.weber.cs.w01113559.db;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -11,7 +12,7 @@ import java.util.List;
 public interface UserDAO {
 
     @Query("Select * from user")
-    List<User> getAll();
+    LiveData<List<User>> getAll();
 
     @Query("Select * from user where uid=:uid LIMIT 1")
     User getUserByID(int uid);

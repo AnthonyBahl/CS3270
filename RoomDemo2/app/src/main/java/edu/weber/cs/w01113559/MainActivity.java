@@ -1,48 +1,51 @@
 package edu.weber.cs.w01113559;
 
+import android.os.Bundle;
+
+import com.google.android.material.snackbar.Snackbar;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 
-import java.util.List;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
-import edu.weber.cs.w01113559.db.AppDatabase;
-import edu.weber.cs.w01113559.db.User;
-import edu.weber.cs.w01113559.db.UserDAO;
+import edu.weber.cs.w01113559.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
+
+    private AppBarConfiguration appBarConfiguration;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        setSupportActionBar(binding.toolbar);
+
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        // Start thread so that data call doesn't freeze app.
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                AppDatabase db = AppDatabase.getInstance(getApplicationContext());
-
-                List<User> courseList;
-
-                UserDAO dao = db.userDAO();
-
-                courseList = dao.getAll();
-
-                if (courseList.size() > 0) {
-                    for (User c:
-                            courseList) {
-                        Log.d("Course List", c.toString());
-                    }
-                }
-            }
-        }).start();
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
+                || super.onSupportNavigateUp();
     }
 }

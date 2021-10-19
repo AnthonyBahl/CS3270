@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/School/Weber/CS3270/RoomDemo2/app/src/main/res/layout/activity_main.xml" value="0.19114583333333332" />
+        <entry key="..\:/School/Weber/CS3270/RoomDemo2/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/School/Weber/CS3270/RoomDemo2/app/src/main/res/layout/content_main.xml" value="0.36666666666666664" />
         <entry key="..\:/School/Weber/CS3270/RoomDemo2/app/src/main/res/layout/fragment_user.xml" value="0.36666666666666664" />
+        <entry key="..\:/School/Weber/CS3270/RoomDemo2/app/src/main/res/layout/fragment_user_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/School/Weber/CS3270/RoomDemo2/app/src/main/res/layout/user_view.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

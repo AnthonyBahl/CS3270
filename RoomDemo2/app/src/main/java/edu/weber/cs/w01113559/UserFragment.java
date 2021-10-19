@@ -97,12 +97,12 @@ public class UserFragment extends Fragment {
                     @Override
                     public void run() {
                         // Background
-                        AppDatabase db = AppDatabase.getInstance(getContext());
-                        db.userDAO().insertAll(new User(first, last));
-
-                        List<User> users = db.userDAO().getAll();
-
-                        Log.d("test", "Users: " + users);
+//                        AppDatabase db = AppDatabase.getInstance(getContext());
+//                        db.userDAO().insertAll(new User(first, last));
+//
+//                        List<User> users = db.userDAO().getAll();
+//
+//                        Log.d("test", "Users: " + users);
                     }
                 }).start();
             }
