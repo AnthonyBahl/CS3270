@@ -15,28 +15,17 @@ import edu.weber.cs.w01113559.cs3270a8.db.Course;
 public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAdapter.CourseViewHolder> {
 
     private List<Course> courseList;
-    private onCourseClickListener mCallback;
+    private CourseListFragment.onCourseClickListener mCallback;
 
-    public interface onCourseClickListener{
-        /**
-         * Passes the course that is clicked.
-         * @param course Course: courseViewHolder for the course that was clicked.
-         */
-        void courseClicked(Course course);
+    public CourseRecyclerAdapter(List<Course> courseList, CourseListFragment.onCourseClickListener mCallback) {
+        this.courseList = courseList;
+        this.mCallback = mCallback;
     }
 
-    public void addCourses(List<Course> list){
+    public void setCourseList(List<Course> list){
         courseList.clear();
         courseList.addAll(list);
         notifyDataSetChanged();
-    }
-
-    /**
-     * ToDo: Find a way to pass this in. 1st Video 48:54
-     * @param callback
-     */
-    public void addInterface(onCourseClickListener callback){
-        mCallback = callback;
     }
 
     /**
