@@ -1,5 +1,6 @@
 package edu.weber.cs.w01113559.cs3270a8.db;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -25,7 +26,7 @@ public interface CourseDAO {
      * @return List<Course>: list of all courses.
      */
     @Query("Select * from course")
-    List<Course> getAll();
+    LiveData<List<Course>> getAll();
 
     /**
      * Retrieve the details of a selected course by _id
