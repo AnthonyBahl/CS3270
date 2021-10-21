@@ -10,7 +10,7 @@ import android.view.View;
 
 import edu.weber.cs.w01113559.cs3270a8.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class activity_main extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

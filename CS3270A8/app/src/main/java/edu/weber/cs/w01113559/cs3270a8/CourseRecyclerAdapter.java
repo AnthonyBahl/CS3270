@@ -51,7 +51,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
 
         // Create the view for the data entry
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.course_view, parent, false);
+                .inflate(R.layout.course_view_fragment, parent, false);
 
         return new CourseViewHolder(view);
     }
