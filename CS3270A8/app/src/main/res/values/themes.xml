@@ -22,4 +22,21 @@
     <style name="Theme.CS3270A8.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.CS3270A8.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- View Course -->
+    <style name="Theme.CS3270A8.EditCourse.TextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_vertical|end</item>
+        <item name="android:padding">8dp</item>
+    </style>
+    <style name="Theme.CS3270A8.EditCourse.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@null</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:editable">false</item>
+    </style>
 </resources>

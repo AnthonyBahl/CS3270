@@ -3,8 +3,10 @@ package edu.weber.cs.w01113559.cs3270a8;
 import android.os.Bundle;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import edu.weber.cs.w01113559.cs3270a8.databinding.ActivityMainBinding;
 import edu.weber.cs.w01113559.cs3270a8.db.Course;
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements CourseListFragmen
 
     @Override
     public void courseClicked(Course course) {
-        //ToDo: Open a fragment to view the course that is passed in.
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.mainContentFragment, new CourseEditFragment(course), "courseEditFrag")
+                .commit();
     }
 }

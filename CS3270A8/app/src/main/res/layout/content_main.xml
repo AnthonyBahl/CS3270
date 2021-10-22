@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
+        android:id="@+id/mainContentFragment"
         android:name="edu.weber.cs.w01113559.cs3270a8.CourseListFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -14,5 +14,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_course_list" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
