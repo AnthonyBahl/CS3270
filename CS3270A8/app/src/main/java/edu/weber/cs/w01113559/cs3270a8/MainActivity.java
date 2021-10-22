@@ -3,6 +3,7 @@ package edu.weber.cs.w01113559.cs3270a8;
 import android.os.Bundle;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
@@ -22,7 +23,15 @@ public class MainActivity extends AppCompatActivity implements CourseListFragmen
 
         setSupportActionBar(binding.toolbar);
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+        binding.fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        binding.fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
