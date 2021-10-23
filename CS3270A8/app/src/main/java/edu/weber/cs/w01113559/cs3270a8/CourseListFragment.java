@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,8 +17,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import edu.weber.cs.w01113559.cs3270a8.db.AppDatabase;
 import edu.weber.cs.w01113559.cs3270a8.db.Course;
@@ -26,13 +30,14 @@ public class CourseListFragment extends Fragment {
 
     private View root;
     private RecyclerView recyclerView;
+    private FloatingActionButton fabAdd, fabSave;
     private CourseRecyclerAdapter adapter;
     private onCourseClickListener mCallback;
 
     public interface onCourseClickListener{
         /**
          * Passes the course that is clicked.
-         * @param course Course: courseViewHolder for the course that was clicked.
+         * @param course Course: course that was clicked
          */
         void courseClicked(Course course);
     }
@@ -60,12 +65,27 @@ public class CourseListFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        fabAdd = requireActivity().findViewById(R.id.fabAdd);
+        fabSave = requireActivity().findViewById(R.id.fabSave);
+
+        Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+
+        fabSave.hide(); // Hide Save Button
+        fabAdd.show(); // Show Add Button
+        toolbar.setNavigationIcon(null);    // Remove back button
+        toolbar.getMenu().clear();  // Remove Menu
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
         Context context = getContext();
         recyclerView = root.findViewById(R.id.courseRV);
-        adapter = new CourseRecyclerAdapter(new ArrayList<Course>(), mCallback);
+        adapter = new CourseRecyclerAdapter(new ArrayList<>(), mCallback);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);

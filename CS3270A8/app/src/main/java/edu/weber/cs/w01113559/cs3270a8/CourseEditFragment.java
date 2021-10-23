@@ -1,46 +1,69 @@
 package edu.weber.cs.w01113559.cs3270a8;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
+import edu.weber.cs.w01113559.cs3270a8.db.AppDatabase;
 import edu.weber.cs.w01113559.cs3270a8.db.Course;
 
-public class CourseEditFragment extends Fragment {
+public class CourseEditFragment extends Fragment implements DeleteConfirmationDialogFragment.deleteDialogInterface {
 
     private View root;
-    private Course course;
+    private final Course course;
     private TextInputLayout tvID,tvName,tvCourseCode,tvStartAt,tvEndAt;
-    private FloatingActionButton fabAdd, fabSave;
-    private String mode;
+    private final String mode;
+    private navigationInterface mCallback;
+
+    interface navigationInterface {
+        /**
+         * Swaps to edit mode.
+         * @param course Course: course to edit
+         */
+        void swapToEdit(Course course);
+
+        /**
+         * Returns to the main screen of the program.
+         */
+        void returnToList();
+    }
 
     /**
-     * Constructor for course view/edit mode
+     * Constructor for course view/edit page (view, edit, or add)
      * @param course Course: the course to view.
+     * @param mode String: view, edit, or add.
      */
-    public CourseEditFragment(Course course) {
+    public CourseEditFragment(Course course, String mode) {
         this.course = course;
-        mode = "view";
+        this.mode = mode;
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+    public void onAttach(@NonNull Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            mCallback = (navigationInterface) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement the courseViewInterface.");
+        }
     }
 
     @Override
@@ -51,26 +74,83 @@ public class CourseEditFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.edit_delete_menu, menu);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+
+        // Add Back Button
+        toolbar.setNavigationIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_round_arrow_back_24, null));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.returnToList();
+            }
+        });
+
+        // Clear any existing menu
+        toolbar.getMenu().clear();
+
+        // Add menu
+        if (!mode.equals("add")) {
+            // Add Edit & Delete Buttons
+            toolbar.inflateMenu(R.menu.edit_delete_menu);
+            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()){
+
+                        case R.id.action_edit_course:   // Edit Clicked
+                            mCallback.swapToEdit(course);
+                            return true;
+
+                        case R.id.action_delete_course: // Delete Clicked
+
+                            DeleteConfirmationDialogFragment dialog = new DeleteConfirmationDialogFragment();
+                            dialog.setCancelable(true);
+                            dialog.show(requireActivity().getSupportFragmentManager(), getString(R.string.delete_dialog));
+
+                            return true;
+
+                        default:
+                            return false;
+                    }
+                }
+            });
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        switch (this.mode){
-            case "view":
-                //ToDo: When I leave this page I need to inflate a new toolbard that doesn't have these buttons
+        // Get Fields
+        tvID = root.findViewById(R.id.inputID);
+        tvName = root.findViewById(R.id.inputName);
+        tvCourseCode = root.findViewById(R.id.inputCourseCode);
+        tvStartAt = root.findViewById(R.id.inputStartAt);
+        tvEndAt = root.findViewById(R.id.inputEndAt);
 
-                // Get Fields
-                tvID = root.findViewById(R.id.inputID);
-                tvName = root.findViewById(R.id.inputName);
-                tvCourseCode = root.findViewById(R.id.inputCourseCode);
-                tvStartAt = root.findViewById(R.id.inputStartAt);
-                tvEndAt = root.findViewById(R.id.inputEndAt);
-                fabAdd = getActivity().findViewById(R.id.fabAdd);
-                fabSave = getActivity().findViewById(R.id.fabSave);
+        // Set Listeners
+        Objects.requireNonNull(tvID.getEditText()).setOnFocusChangeListener(inputListener);
+        Objects.requireNonNull(tvName.getEditText()).setOnFocusChangeListener(inputListener);
+        Objects.requireNonNull(tvCourseCode.getEditText()).setOnFocusChangeListener(inputListener);
+        Objects.requireNonNull(tvStartAt.getEditText()).setOnFocusChangeListener(inputListener);
+        Objects.requireNonNull(tvEndAt.getEditText()).setOnFocusChangeListener(inputListener);
+
+        // Get Fab buttons that are stored in Main Activity because it's a CoordinatorLayout, this allows them to move with the keyboard.
+        FloatingActionButton fabAdd = requireActivity().findViewById(R.id.fabAdd);
+        FloatingActionButton fabSave = requireActivity().findViewById(R.id.fabSave);
+
+        // Disable the add fab button
+        fabAdd.hide();
+
+        // Cater to which mode we're in
+        switch (this.mode){
+
+            case "view":
+
+                populateFields(this.course);
 
                 // Make Fields not editable
                 Objects.requireNonNull(tvID.getEditText()).setEnabled(false);
@@ -79,70 +159,133 @@ public class CourseEditFragment extends Fragment {
                 Objects.requireNonNull(tvStartAt.getEditText()).setEnabled(false);
                 Objects.requireNonNull(tvEndAt.getEditText()).setEnabled(false);
 
-                // Populate Fields
-                tvID.getEditText().setText(course.getId());
-                tvName.getEditText().setText(course.getName());
-                tvCourseCode.getEditText().setText(course.getCourse_code());
-                tvStartAt.getEditText().setText(course.getStart_at());
-                tvEndAt.getEditText().setText(course.getEnd_at());
+                // Add grey tint to imply not editable
+                tvID.setBoxBackgroundColor(getResources().getColor(R.color.grey_84));
+                tvName.setBoxBackgroundColor(getResources().getColor(R.color.grey_84));
+                tvCourseCode.setBoxBackgroundColor(getResources().getColor(R.color.grey_84));
+                tvCourseCode.setBoxBackgroundColor(getResources().getColor(R.color.grey_84));
+                tvStartAt.setBoxBackgroundColor(getResources().getColor(R.color.grey_84));
+                tvEndAt.setBoxBackgroundColor(getResources().getColor(R.color.grey_84));
 
-                // Disable the fab button in View mode
-                fabAdd.hide();
-                fabSave.show();
-        }
-    }
+                // Hide save button (Even though it should already be)
+                fabSave.hide();
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+                break;
 
-        switch (item.getItemId()){
-
-            case R.id.action_edit_course:
-
-                mode = "edit";
-
-                // Make Fields editable
-                Objects.requireNonNull(tvID.getEditText()).setEnabled(true);
-                Objects.requireNonNull(tvName.getEditText()).setEnabled(true);
-                Objects.requireNonNull(tvCourseCode.getEditText()).setEnabled(true);
-                Objects.requireNonNull(tvStartAt.getEditText()).setEnabled(true);
-                Objects.requireNonNull(tvEndAt.getEditText()).setEnabled(true);
-
-                // ToDo: Change fab button to a save button and enable again
-
-                return true;
-            case R.id.action_delete_course:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-
-    public void saveCourse(){
-        switch (this.mode){
             case "edit":
-                // ToDo: Validate Data
 
-                // ToDo: Save the course
+                populateFields(this.course);
 
-                fabSave.hide();
-                fabAdd.show();
-
-                // ToDo: Return to list view
+                // Show save button
+                fabSave.show();
 
                 break;
+
             case "add":
-                // ToDo: Validate Data
 
-                // ToDo: Add the course
-
-                fabSave.hide();
-                fabAdd.show();
-
-                // ToDo: Return to list view
+                // Show save button
+                fabSave.show();
 
                 break;
         }
+    }
+
+    /**
+     * Watch for when the user leaves the text field, then validate the data.
+     * If data is valid, update course.
+     */
+    private final View.OnFocusChangeListener inputListener = new View.OnFocusChangeListener() {
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if (!hasFocus) { validateData((EditText) v); }
+        }
+    };
+
+    /**
+     * Submits the changes/additions to the database.
+     */
+    public void saveCourse(){
+        if (validateData(tvID.getEditText(), tvName.getEditText(), tvCourseCode.getEditText(), tvStartAt.getEditText(), tvEndAt.getEditText())) {
+
+                    course.setId(Objects.requireNonNull(tvID.getEditText()).getText().toString());
+                    course.setName(Objects.requireNonNull(tvName.getEditText()).getText().toString());
+                    course.setCourse_code(Objects.requireNonNull(tvCourseCode.getEditText()).getText().toString());
+                    course.setStart_at(Objects.requireNonNull(tvStartAt.getEditText()).getText().toString());
+                    course.setEnd_at(Objects.requireNonNull(tvEndAt.getEditText()).getText().toString());
+
+            switch (mode) {
+
+                case "edit":
+                    // Update record
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AppDatabase db = AppDatabase.getInstance(getContext());
+
+                            db.courseDAO().updateCourses(course);
+                        }
+                    }).start();
+                    break;
+
+                case "add":
+                    // Insert record
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AppDatabase db = AppDatabase.getInstance(getContext());
+
+                            db.courseDAO().insertAll(course);
+                        }
+                    }).start();
+                    break;
+            }
+            mCallback.returnToList();
+        }
+    }
+
+    /**
+     * Validates the text field to make sure it isn't blank
+     * @param textView TextLayoutEditText: field to check.
+     * @return boolean: true- Valid Text, false- Invalid Text
+     */
+    private boolean validateData(EditText ...textView) {
+        for (EditText tv: textView) {
+            if (tv.length() < 1) {
+                tv.setError(tv.getTag().toString() + " can not be blank.");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Populates the text fields with an existing courses information.
+     * @param course Course: course with data to populate fields with.
+     */
+    private void populateFields(Course course) {
+        Objects.requireNonNull(tvID.getEditText()).setText(course.getId());
+        Objects.requireNonNull(tvName.getEditText()).setText(course.getName());
+        Objects.requireNonNull(tvCourseCode.getEditText()).setText(course.getCourse_code());
+        Objects.requireNonNull(tvStartAt.getEditText()).setText(course.getStart_at());
+        Objects.requireNonNull(tvEndAt.getEditText()).setText(course.getEnd_at());
+    }
+
+    /**
+     * Deletes this course.
+     */
+    @Override
+    public void confirmDelete() {
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                AppDatabase db = AppDatabase.getInstance(getContext());
+
+                db.courseDAO().deleteCourse(course);
+            }
+        }).start();
+
+        mCallback.returnToList();
     }
 }

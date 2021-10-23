@@ -1,5 +1,6 @@
 package edu.weber.cs.w01113559.cs3270a8.db;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -14,6 +15,10 @@ public class Course {
     String course_code;
     String start_at;
     String end_at;
+
+    @Ignore
+    public Course() {
+    }
 
     @Ignore
     public Course(String id, String name, String course_code, String start_at, String end_at) {
@@ -81,6 +86,7 @@ public class Course {
         this.end_at = end_at;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Course{" +
