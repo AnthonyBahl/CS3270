@@ -32,6 +32,11 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
             notifyDataSetChanged();
     }
 
+    public void clear() {
+        this.userList.clear();
+        notifyDataSetChanged();
+    }
+
     /**
      * Take the data (single row) and build up the template for that row to be bound to.
      * @param parent

@@ -13,12 +13,17 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.ArrayList;
+
 import edu.weber.cs.w01113559.databinding.ActivityMainBinding;
+import edu.weber.cs.w01113559.db.Course;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private GetCanvasCourses task;
+    UsersRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,26 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
+        task = new GetCanvasCourses();
+
+        // Implement Interface
+        task.setOnCourseListComplete(new GetCanvasCourses.OnCourseListComplete() {
+            @Override
+            public void processCourseList(Course[] courses) {
+                if (courses != null) {
+                    // Our addapter is for Users, but it's the same idea.
+                    adapter.clear();
+                    ArrayList<Course> coursesList = new ArrayList<>();
+                    for (Course course:courses) {
+                        coursesList.add(course);
+                    }
+                }
+            }
+        });
+
+        task.execute("");
     }
 
     @Override
@@ -48,4 +73,6 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
 }
