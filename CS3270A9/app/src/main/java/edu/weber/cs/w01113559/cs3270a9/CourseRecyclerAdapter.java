@@ -1,4 +1,4 @@
-package edu.weber.cs.w01113559.cs3270a8;
+package edu.weber.cs.w01113559.cs3270a9;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import edu.weber.cs.w01113559.cs3270a8.db.Course;
+import edu.weber.cs.w01113559.cs3270a9.db.Course;
 
 public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAdapter.CourseViewHolder> {
 

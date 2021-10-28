@@ -24,12 +24,12 @@
 
                 <TextView
                     android:id="@+id/tvID"
-                    style="@style/Theme.CS3270A8.ViewCourse.TextView"
+                    style="@style/Theme.CS3270A9.ViewCourse.TextView"
                     android:text="@string/id" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputID"
-                    style="@style/Theme.CS3270A8.ViewCourse.TextInputLayout">
+                    style="@style/Theme.CS3270A9.ViewCourse.TextInputLayout">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextID"
@@ -47,12 +47,12 @@
 
                 <TextView
                     android:id="@+id/tvName"
-                    style="@style/Theme.CS3270A8.ViewCourse.TextView"
+                    style="@style/Theme.CS3270A9.ViewCourse.TextView"
                     android:text="@string/name" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputName"
-                    style="@style/Theme.CS3270A8.ViewCourse.TextInputLayout">
+                    style="@style/Theme.CS3270A9.ViewCourse.TextInputLayout">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextName"
@@ -70,12 +70,12 @@
 
                 <TextView
                     android:id="@+id/tvCourseCode"
-                    style="@style/Theme.CS3270A8.ViewCourse.TextView"
+                    style="@style/Theme.CS3270A9.ViewCourse.TextView"
                     android:text="@string/course_code" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputCourseCode"
-                    style="@style/Theme.CS3270A8.ViewCourse.TextInputLayout">
+                    style="@style/Theme.CS3270A9.ViewCourse.TextInputLayout">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextCourseCode"
@@ -93,12 +93,12 @@
 
                 <TextView
                     android:id="@+id/tvStartAt"
-                    style="@style/Theme.CS3270A8.ViewCourse.TextView"
+                    style="@style/Theme.CS3270A9.ViewCourse.TextView"
                     android:text="@string/start_at" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputStartAt"
-                    style="@style/Theme.CS3270A8.ViewCourse.TextInputLayout">
+                    style="@style/Theme.CS3270A9.ViewCourse.TextInputLayout">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextStartAt"
@@ -116,12 +116,12 @@
 
                 <TextView
                     android:id="@+id/tvEndAt"
-                    style="@style/Theme.CS3270A8.ViewCourse.TextView"
+                    style="@style/Theme.CS3270A9.ViewCourse.TextView"
                     android:text="@string/end_at" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputEndAt"
-                    style="@style/Theme.CS3270A8.ViewCourse.TextInputLayout">
+                    style="@style/Theme.CS3270A9.ViewCourse.TextInputLayout">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextEndAt"

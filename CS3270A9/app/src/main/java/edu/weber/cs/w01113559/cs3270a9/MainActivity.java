@@ -1,21 +1,16 @@
-package edu.weber.cs.w01113559.cs3270a8;
+package edu.weber.cs.w01113559.cs3270a9;
 
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.LiveData;
 
-import android.util.Log;
 import android.view.View;
 
-import java.util.List;
 import java.util.Objects;
 
-import edu.weber.cs.w01113559.cs3270a8.databinding.ActivityMainBinding;
-import edu.weber.cs.w01113559.cs3270a8.db.AppDatabase;
-import edu.weber.cs.w01113559.cs3270a8.db.Course;
-import edu.weber.cs.w01113559.cs3270a8.db.CourseDAO;
+import edu.weber.cs.w01113559.cs3270a9.databinding.ActivityMainBinding;
+import edu.weber.cs.w01113559.cs3270a9.db.Course;
 
 public class MainActivity extends AppCompatActivity implements CourseListFragment.onCourseClickListener, CourseEditFragment.navigationInterface {
 
@@ -36,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements CourseListFragmen
         // I'm sure this is important for something... I guess i'll leave it.
         // I think this actually is the code that was added because we assigned this as our main activity. SO it's binding to like.... the activity or the context or something manually
         // and it maybe wasn't there last time because it was done behind the scenes somewhere... But since this is not a standard "main activity" it has to do it manually
-        edu.weber.cs.w01113559.cs3270a8.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        edu.weber.cs.w01113559.cs3270a9.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Assign Toolbar

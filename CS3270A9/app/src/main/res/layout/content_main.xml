@@ -7,7 +7,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainContentFragment"
-        android:name="edu.weber.cs.w01113559.cs3270a8.CourseListFragment"
+        android:name="edu.weber.cs.w01113559.cs3270a9.CourseListFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="?attr/actionBarSize"

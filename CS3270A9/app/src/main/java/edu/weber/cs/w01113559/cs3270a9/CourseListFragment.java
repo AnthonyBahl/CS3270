@@ -1,4 +1,4 @@
-package edu.weber.cs.w01113559.cs3270a8;
+package edu.weber.cs.w01113559.cs3270a9;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,10 +21,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import edu.weber.cs.w01113559.cs3270a8.db.AppDatabase;
-import edu.weber.cs.w01113559.cs3270a8.db.Course;
+import edu.weber.cs.w01113559.cs3270a9.db.Course;
 
 public class CourseListFragment extends Fragment {
 

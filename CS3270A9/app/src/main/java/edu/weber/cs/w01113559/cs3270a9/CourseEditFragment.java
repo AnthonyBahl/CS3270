@@ -1,4 +1,4 @@
-package edu.weber.cs.w01113559.cs3270a8;
+package edu.weber.cs.w01113559.cs3270a9;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,8 +20,8 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
-import edu.weber.cs.w01113559.cs3270a8.db.AppDatabase;
-import edu.weber.cs.w01113559.cs3270a8.db.Course;
+import edu.weber.cs.w01113559.cs3270a9.db.AppDatabase;
+import edu.weber.cs.w01113559.cs3270a9.db.Course;
 
 public class CourseEditFragment extends Fragment implements DeleteConfirmationDialogFragment.deleteDialogInterface {
 

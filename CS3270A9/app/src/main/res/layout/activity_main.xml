@@ -9,7 +9,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.CS3270A8.AppBarOverlay">
+        android:theme="@style/Theme.CS3270A9.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -20,7 +20,7 @@
             android:paddingEnd="16dp"
             android:background="?attr/colorPrimary"
             app:contentInsetStartWithNavigation="0dp"
-            app:popupTheme="@style/Theme.CS3270A8.PopupOverlay" />
+            app:popupTheme="@style/Theme.CS3270A9.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
