@@ -77,6 +77,7 @@ public class CourseEditFragment extends Fragment implements DeleteConfirmationDi
         super.onViewCreated(view, savedInstanceState);
 
         Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+        toolbar.getMenu().clear();  // Clear any existing menu
 
         // Add Back Button
         toolbar.setNavigationIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_round_arrow_back_24, null));
@@ -86,9 +87,6 @@ public class CourseEditFragment extends Fragment implements DeleteConfirmationDi
                 mCallback.returnToList();
             }
         });
-
-        // Clear any existing menu
-        toolbar.getMenu().clear();
 
         // Add menu
         if (!mode.equals("add")) {

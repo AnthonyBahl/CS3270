@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -70,11 +73,28 @@ public class CourseListFragment extends Fragment {
         fabSave = requireActivity().findViewById(R.id.fabSave);
 
         Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(null);            // Remove back button
+        toolbar.getMenu().clear();                  // Clear any existing menu
+        toolbar.inflateMenu(R.menu.main_menu);      // Set main menu
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_import_courses:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
 
         fabSave.hide(); // Hide Save Button
         fabAdd.show(); // Show Add Button
-        toolbar.setNavigationIcon(null);    // Remove back button
-        toolbar.getMenu().clear();  // Remove Menu
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

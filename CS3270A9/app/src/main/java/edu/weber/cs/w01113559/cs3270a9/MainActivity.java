@@ -34,9 +34,6 @@ public class MainActivity extends AppCompatActivity implements CourseListFragmen
         edu.weber.cs.w01113559.cs3270a9.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Assign Toolbar
-        setSupportActionBar(binding.toolbar);
-
         // 'Add' Button
         binding.fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
