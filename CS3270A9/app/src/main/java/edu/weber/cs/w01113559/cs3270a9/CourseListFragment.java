@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import edu.weber.cs.w01113559.cs3270a9.db.Course;
@@ -34,6 +35,7 @@ public class CourseListFragment extends Fragment {
     private FloatingActionButton fabAdd, fabSave;
     private CourseRecyclerAdapter adapter;
     private onCourseClickListener mCallback;
+    private GetCanvasCourses getCoursesTask;
 
     public interface onCourseClickListener{
         /**
@@ -81,6 +83,26 @@ public class CourseListFragment extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_import_courses:
+
+                        getCoursesTask = new GetCanvasCourses();
+
+                        getCoursesTask.setOnCourseListComplete(new GetCanvasCourses.OnCourseListComplete() {
+                            @Override
+                            public void processCourseList(Course[] courses) {
+
+                                if(courses != null) {
+
+                                    ArrayList<Course> coursesList = new ArrayList<>(Arrays.asList(courses));
+
+                                    adapter.clear();
+
+                                    adapter.setCourseList(coursesList);
+                                }
+                            }
+                        });
+
+                        getCoursesTask.execute("");
+
                         return true;
                     default:
                         return false;

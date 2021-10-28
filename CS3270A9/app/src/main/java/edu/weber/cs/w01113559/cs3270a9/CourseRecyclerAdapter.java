@@ -81,6 +81,14 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
     }
 
     /**
+     * Clears course list.
+     */
+    public void clear() {
+        this.courseList.clear();
+        notifyDataSetChanged();
+    }
+
+    /**
      * Holds the UI of an individual item in the list.
      */
     public class CourseViewHolder extends RecyclerView.ViewHolder {

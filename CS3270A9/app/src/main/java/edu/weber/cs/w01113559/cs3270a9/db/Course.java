@@ -10,11 +10,11 @@ public class Course {
 
     @PrimaryKey(autoGenerate = true)
     int _id;
-    String id;
-    String name;
-    String course_code;
-    String start_at;
-    String end_at;
+    protected String id;
+    protected String name;
+    protected String course_code;
+    protected String start_at;
+    protected String end_at;
 
     @Ignore
     public Course() {
