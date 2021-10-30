@@ -32,7 +32,7 @@ public class CourseListFragment extends Fragment {
 
     private View root;
     private RecyclerView recyclerView;
-    private FloatingActionButton fabAdd, fabSave;
+    private FloatingActionButton fabAdd;
     private CourseRecyclerAdapter adapter;
     private onCourseClickListener mCallback;
     private GetCanvasCourses getCoursesTask;
@@ -72,7 +72,6 @@ public class CourseListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         fabAdd = requireActivity().findViewById(R.id.fabAdd);
-        fabSave = requireActivity().findViewById(R.id.fabSave);
 
         Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(null);            // Remove back button
@@ -110,7 +109,6 @@ public class CourseListFragment extends Fragment {
             }
         });
 
-        fabSave.hide(); // Hide Save Button
         fabAdd.show(); // Show Add Button
     }
 

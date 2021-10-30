@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.view.menu.ActionMenuItem;
+import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
@@ -88,32 +90,84 @@ public class CourseEditFragment extends Fragment implements DeleteConfirmationDi
             }
         });
 
-        // Add menu
-        if (!mode.equals("add")) {
-            // Add Edit & Delete Buttons
-            toolbar.inflateMenu(R.menu.edit_delete_menu);
-            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()){
+        // Inflate Menu
+        toolbar.inflateMenu(R.menu.edit_delete_menu);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
 
-                        case R.id.action_edit_course:   // Edit Clicked
-                            mCallback.swapToEdit(course);
-                            return true;
+                    case R.id.action_edit_course:   // Edit Clicked
+                        mCallback.swapToEdit(course);
+                        return true;
 
-                        case R.id.action_delete_course: // Delete Clicked
+                    case R.id.action_delete_course: // Delete Clicked
 
-                            DeleteConfirmationDialogFragment dialog = new DeleteConfirmationDialogFragment();
-                            dialog.setCancelable(true);
-                            dialog.show(requireActivity().getSupportFragmentManager(), getString(R.string.delete_dialog));
+                        DeleteConfirmationDialogFragment dialog = new DeleteConfirmationDialogFragment();
+                        dialog.setCancelable(true);
+                        dialog.show(requireActivity().getSupportFragmentManager(), getString(R.string.delete_dialog));
 
-                            return true;
+                        return true;
 
-                        default:
-                            return false;
-                    }
+                    case R.id.action_save_course: // Save Clicked
+
+                        if (validateData(tvID.getEditText(), tvName.getEditText(), tvCourseCode.getEditText(), tvStartAt.getEditText(), tvEndAt.getEditText())) {
+
+                            course.setId(Objects.requireNonNull(tvID.getEditText()).getText().toString());
+                            course.setName(Objects.requireNonNull(tvName.getEditText()).getText().toString());
+                            course.setCourse_code(Objects.requireNonNull(tvCourseCode.getEditText()).getText().toString());
+                            course.setStart_at(Objects.requireNonNull(tvStartAt.getEditText()).getText().toString());
+                            course.setEnd_at(Objects.requireNonNull(tvEndAt.getEditText()).getText().toString());
+
+
+                            switch (mode) {
+
+                                case "edit":
+                                    // Update record
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            AppDatabase db = AppDatabase.getInstance(getContext());
+
+                                            db.courseDAO().updateCourses(course);
+                                        }
+                                    }).start();
+                                    break;
+
+                                case "add":
+                                    // Insert record
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            AppDatabase db = AppDatabase.getInstance(getContext());
+
+                                            db.courseDAO().insertAll(course);
+                                        }
+                                    }).start();
+                                    break;
+                            }
+                            mCallback.returnToList();
+                        }
+
+                    default:
+                        return false;
                 }
-            });
+            }
+        });
+
+        // Adjust Button Options based on mode
+        switch (mode) {
+            case "view":
+                toolbar.findViewById(R.id.action_save_course).setVisibility(View.GONE);
+                break;
+            case "edit":
+                toolbar.findViewById(R.id.action_edit_course).setVisibility(View.GONE);
+                break;
+            case "add":
+                toolbar.findViewById(R.id.action_edit_course).setVisibility(View.GONE);
+                toolbar.findViewById(R.id.action_delete_course).setVisibility(View.GONE);
+                break;
+
         }
     }
 
@@ -137,7 +191,6 @@ public class CourseEditFragment extends Fragment implements DeleteConfirmationDi
 
         // Get Fab buttons that are stored in Main Activity because it's a CoordinatorLayout, this allows them to move with the keyboard.
         FloatingActionButton fabAdd = requireActivity().findViewById(R.id.fabAdd);
-        FloatingActionButton fabSave = requireActivity().findViewById(R.id.fabSave);
 
         // Disable the add fab button
         fabAdd.hide();
@@ -164,24 +217,11 @@ public class CourseEditFragment extends Fragment implements DeleteConfirmationDi
                 tvStartAt.setBoxBackgroundColor(getResources().getColor(R.color.grey_84));
                 tvEndAt.setBoxBackgroundColor(getResources().getColor(R.color.grey_84));
 
-                // Hide save button (Even though it should already be)
-                fabSave.hide();
-
                 break;
 
             case "edit":
 
                 populateFields(this.course);
-
-                // Show save button
-                fabSave.show();
-
-                break;
-
-            case "add":
-
-                // Show save button
-                fabSave.show();
 
                 break;
         }
@@ -197,48 +237,6 @@ public class CourseEditFragment extends Fragment implements DeleteConfirmationDi
             if (!hasFocus) { validateData((EditText) v); }
         }
     };
-
-    /**
-     * Submits the changes/additions to the database.
-     */
-    public void saveCourse(){
-        if (validateData(tvID.getEditText(), tvName.getEditText(), tvCourseCode.getEditText(), tvStartAt.getEditText(), tvEndAt.getEditText())) {
-
-                    course.setId(Objects.requireNonNull(tvID.getEditText()).getText().toString());
-                    course.setName(Objects.requireNonNull(tvName.getEditText()).getText().toString());
-                    course.setCourse_code(Objects.requireNonNull(tvCourseCode.getEditText()).getText().toString());
-                    course.setStart_at(Objects.requireNonNull(tvStartAt.getEditText()).getText().toString());
-                    course.setEnd_at(Objects.requireNonNull(tvEndAt.getEditText()).getText().toString());
-
-            switch (mode) {
-
-                case "edit":
-                    // Update record
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            AppDatabase db = AppDatabase.getInstance(getContext());
-
-                            db.courseDAO().updateCourses(course);
-                        }
-                    }).start();
-                    break;
-
-                case "add":
-                    // Insert record
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            AppDatabase db = AppDatabase.getInstance(getContext());
-
-                            db.courseDAO().insertAll(course);
-                        }
-                    }).start();
-                    break;
-            }
-            mCallback.returnToList();
-        }
-    }
 
     /**
      * Validates the text field to make sure it isn't blank

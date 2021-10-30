@@ -5,10 +5,15 @@
     <item android:title="@string/edit_course"
         android:id="@+id/action_edit_course"
         android:icon="@drawable/ic_baseline_edit_24"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
+
+    <item android:title="@string/delete_course"
+        android:id="@+id/action_save_course"
+        android:icon="@drawable/ic_round_save_24"
+        app:showAsAction="ifRoom"/>
 
     <item android:title="@string/delete_course"
         android:id="@+id/action_delete_course"
         android:icon="@drawable/ic_baseline_delete_24"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 </menu>

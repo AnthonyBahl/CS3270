@@ -44,21 +44,6 @@ public class MainActivity extends AppCompatActivity implements CourseListFragmen
                         .commit();
             }
         });
-
-        // 'Save' Button
-        binding.fabSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                // Make sure CourseEditFragment isn't null
-                if (courseEditFragment == null) {
-                    courseEditFragment = (CourseEditFragment) fragmentManager.findFragmentByTag("courseEditFrag");
-                }
-
-                // Save the course
-                Objects.requireNonNull(courseEditFragment).saveCourse();
-            }
-        });
     }
 
     /**
