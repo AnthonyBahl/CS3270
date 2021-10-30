@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.weber.cs.w01113559.cs3270a9.db.AppDatabase;
 import edu.weber.cs.w01113559.cs3270a9.db.Course;
 
 public class CourseListFragment extends Fragment {
@@ -80,32 +81,40 @@ public class CourseListFragment extends Fragment {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_import_courses:
+                if (item.getItemId() == R.id.action_import_courses) {
+                    getCoursesTask = new GetCanvasCourses();
 
-                        getCoursesTask = new GetCanvasCourses();
+                    getCoursesTask.setOnCourseListComplete(new GetCanvasCourses.OnCourseListComplete() {
+                        @Override
+                        public void processCourseList(Course[] courses) {
 
-                        getCoursesTask.setOnCourseListComplete(new GetCanvasCourses.OnCourseListComplete() {
-                            @Override
-                            public void processCourseList(Course[] courses) {
+                            if (courses != null) {
 
-                                if(courses != null) {
+                                // Update database
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AppDatabase db = AppDatabase.getInstance(getContext());
 
-                                    ArrayList<Course> coursesList = new ArrayList<>(Arrays.asList(courses));
+                                        db.courseDAO().insertAll(courses);
+                                    }
 
-                                    adapter.clear();
+                                }).start();
 
-                                    adapter.setCourseList(coursesList);
-                                }
+/*                                ArrayList<Course> coursesList = new ArrayList<>(Arrays.asList(courses));
+
+                                adapter.clear();
+
+                                adapter.setCourseList(coursesList);*/
                             }
-                        });
+                        }
+                    });
 
-                        getCoursesTask.execute("");
+                    getCoursesTask.execute("");
 
-                        return true;
-                    default:
-                        return false;
+                    return true;
                 }
+                return false;
             }
         });
 
