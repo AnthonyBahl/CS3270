@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CS3270A9" >
         <activity
-            android:name="edu.weber.cs.w01113559.cs3270a9.MainActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.CS3270A9.NoActionBar" >

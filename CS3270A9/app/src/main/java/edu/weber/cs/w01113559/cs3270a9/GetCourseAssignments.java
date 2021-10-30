@@ -15,8 +15,6 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import edu.weber.cs.w01113559.cs3270a9.db.Course;
-
 public class GetCourseAssignments extends AsyncTask<String, Integer, String> {
 
     private String rawJSON;
