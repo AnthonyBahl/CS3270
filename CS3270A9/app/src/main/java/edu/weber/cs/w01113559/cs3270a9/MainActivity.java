@@ -59,6 +59,17 @@ public class MainActivity extends AppCompatActivity implements CourseListFragmen
     }
 
     /**
+     * Opens an assignment list page.
+     * @param course Course: course that was long clicked
+     */
+    @Override
+    public void courseLongClicked(Course course) {
+        fragmentManager.beginTransaction()
+                .replace(R.id.mainContentFragment, new AssignmentListFragment(course), "AssignmentListFrag")
+                .commit();
+    }
+
+    /**
      * Opens course edit view.
      * @param course Course: course to edit
      */

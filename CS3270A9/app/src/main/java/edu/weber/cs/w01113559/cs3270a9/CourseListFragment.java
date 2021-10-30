@@ -44,6 +44,12 @@ public class CourseListFragment extends Fragment {
          * @param course Course: course that was clicked
          */
         void courseClicked(Course course);
+
+        /**
+         * Passes the course that is long clicked.
+         * @param course Course: course that was clicked
+         */
+        void courseLongClicked(Course course);
     }
 
     public CourseListFragment() {
@@ -81,40 +87,54 @@ public class CourseListFragment extends Fragment {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.action_import_courses) {
-                    getCoursesTask = new GetCanvasCourses();
+                switch (item.getItemId()) {
 
-                    getCoursesTask.setOnCourseListComplete(new GetCanvasCourses.OnCourseListComplete() {
-                        @Override
-                        public void processCourseList(Course[] courses) {
+                    case R.id.action_import_courses:    // Import Courses
+                        getCoursesTask = new GetCanvasCourses();
 
-                            if (courses != null) {
+                        getCoursesTask.setOnCourseListComplete(new GetCanvasCourses.OnCourseListComplete() {
+                            @Override
+                            public void processCourseList(Course[] courses) {
 
-                                // Update database
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        AppDatabase db = AppDatabase.getInstance(getContext());
+                                if (courses != null) {
 
-                                        db.courseDAO().insertAll(courses);
-                                    }
+                                    // Update database
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            AppDatabase db = AppDatabase.getInstance(getContext());
 
-                                }).start();
+                                            db.courseDAO().clearCourses();
 
-/*                                ArrayList<Course> coursesList = new ArrayList<>(Arrays.asList(courses));
+                                            db.courseDAO().insertAll(courses);
+                                        }
 
-                                adapter.clear();
-
-                                adapter.setCourseList(coursesList);*/
+                                    }).start();
+                                }
                             }
-                        }
-                    });
+                        });
 
-                    getCoursesTask.execute("");
+                        getCoursesTask.execute("");
+                        return true;
 
-                    return true;
+                    case R.id.action_clear_courses:
+
+                        // Update database
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppDatabase db = AppDatabase.getInstance(getContext());
+
+                                db.courseDAO().clearCourses();
+                            }
+
+                        }).start();
+
+                        return true;
+
+                    default:
+                        return false;
                 }
-                return false;
             }
         });
 

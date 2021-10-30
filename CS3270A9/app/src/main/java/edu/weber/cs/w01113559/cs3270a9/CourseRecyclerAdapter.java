@@ -28,6 +28,10 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         notifyDataSetChanged();
     }
 
+    public List<Course> getCourseList() {
+        return courseList;
+    }
+
     /**
      * Takes the data for a single row and builds up the template for that row to be bound to.
      * @param parent
@@ -64,6 +68,15 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
                 public void onClick(View v) {
                     // Pass out the course that was clicked.
                     mCallback.courseClicked(course);
+                }
+            });
+
+            holder.itemRoot.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    // Pass out the course that was clicked.
+                    mCallback.courseLongClicked(course);
+                    return true;
                 }
             });
 

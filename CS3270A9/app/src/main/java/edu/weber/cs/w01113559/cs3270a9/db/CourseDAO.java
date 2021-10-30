@@ -60,6 +60,7 @@ public interface CourseDAO {
     @Query("Select * From course WHERE course_code LIKE :code LIMIT 1")
     Course getCourseByCode(String code);
 
-
+    @Query("DELETE FROM course")
+    void clearCourses();
 
 }
