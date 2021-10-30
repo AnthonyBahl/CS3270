@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import edu.weber.cs.w01113559.cs3270a9.db.Course;
 
 public class AssignmentListFragment extends Fragment {
@@ -48,6 +50,12 @@ public class AssignmentListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Get Fab buttons that are stored in Main Activity because it's a CoordinatorLayout, this allows them to move with the keyboard.
+        FloatingActionButton fabAdd = requireActivity().findViewById(R.id.fabAdd);
+
+        // Disable the add fab button
+        fabAdd.hide();
+
         // Add Back Button to toolbar
         Toolbar toolbar = requireActivity().findViewById(R.id.toolbar);
         toolbar.getMenu().clear();  // Clear any existing menu
@@ -58,6 +66,11 @@ public class AssignmentListFragment extends Fragment {
                 mCallback.returnToList();
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         // Get Assignments
         GetCourseAssignments getCourseAssignments = new GetCourseAssignments();
@@ -70,5 +83,6 @@ public class AssignmentListFragment extends Fragment {
             }
         });
         getCourseAssignments.execute(course.getId());
+
     }
 }
