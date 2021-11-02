@@ -1,0 +1,3 @@
+[submodule "emoji-moods-app"]
+	path = emoji-moods-app
+	url = git@github.com:AnthonyBahlWeber/emoji-moods-app.git
