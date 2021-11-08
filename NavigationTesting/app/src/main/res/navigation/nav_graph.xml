@@ -22,7 +22,16 @@
         tools:layout="@layout/fragment_second">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/next_action"
+            app:destination="@id/FirstFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/FirstFragment" />      <!--Pop Up To allows for removing the backstack up to the first fragment -->
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="edu.weber.cs.w01113559.navigationtesting.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>
